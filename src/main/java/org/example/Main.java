@@ -20,7 +20,7 @@ public class Main {
 
         DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(token);
         builder.setStatus(OnlineStatus.ONLINE);
-        builder.setActivity(Activity.watching("TechnoVisionTV"));
+        builder.setActivity(Activity.watching("Ananı"));
         shardManager = builder.build();
     }
 
