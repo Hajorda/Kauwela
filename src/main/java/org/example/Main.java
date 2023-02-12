@@ -2,8 +2,13 @@ package org.example;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.api.sharding.ShardManager;
+import net.dv8tion.jda.api.utils.ChunkingFilter;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
+import org.example.Listeners.EventListeners;
 
 import javax.security.auth.login.LoginException;
 public class Main {
@@ -21,7 +26,14 @@ public class Main {
         DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(token);
         builder.setStatus(OnlineStatus.ONLINE);
         builder.setActivity(Activity.watching("Ananı"));
+        builder.enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_PRESENCES,GatewayIntent.GUILD_INVITES,GatewayIntent.GUILD_MEMBERS);
+        builder.setMemberCachePolicy(MemberCachePolicy.ALL);
+        builder.setChunkingFilter(ChunkingFilter.ALL);
+        builder.enableCache(CacheFlag.ONLINE_STATUS);
+
         shardManager = builder.build();
+       EventListeners eventListeners = new EventListeners();
+
     }
 
     /**
@@ -41,7 +53,9 @@ public class Main {
      */
     public static void main(String[] args) {
         try {
+
             Main bot = new Main();
+
         } catch (LoginException e) {
             System.out.println("ERROR: Provided bot token is invalid!");
         }
