@@ -10,8 +10,11 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
+import java.time.OffsetDateTime;
+
 public class EventListeners extends ListenerAdapter {
-    private Dotenv dot;
+    private final Dotenv dot;
 
     public EventListeners(Dotenv dot) {
         this.dot = dot;
@@ -27,8 +30,26 @@ public class EventListeners extends ListenerAdapter {
         }else if (message.equalsIgnoreCase(pre +"annen")){
             event.getChannel().sendMessageFormat("Baban").queue();
         } else if (message.equalsIgnoreCase(pre+"ping")) {
-            event.getChannel().sendMessageFormat(event.getJDA().getGatewayPing()+" ms"+" "+event.getJDA().getHttpClient().minWebSocketMessageToCompress()).queue();
+            EmbedBuilder eb = new EmbedBuilder();
+           try{
+               eb.setTitle("KauwelaBot'un Durumu", null);
+            eb.setColor(new Color(0x59E010));
+            eb.setThumbnail("https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png");
 
+            eb.setDescription("");
+            eb.addField("Ping",""+event.getJDA().getGatewayPing()+"ms",true);
+            eb.addField("Kullanıcı Sayısı",""+event.getGuild().getMemberCount(),true);
+
+            eb.addField("Bot Durumu","Aktif",true);
+            eb.addField("Sunucu Shard",""+event.getJDA().getShardInfo().getShardString(),true);
+
+            eb.setFooter("KauwelaBot",event.getJDA().getSelfUser().getAvatarUrl());
+
+            //event.getChannel().sendMessageFormat(eb.build()).queue();
+            event.getChannel().sendMessageEmbeds(eb.build()).queue();}
+           catch (Exception e){
+               System.out.println(e.getMessage());
+           }
         }
     }
 

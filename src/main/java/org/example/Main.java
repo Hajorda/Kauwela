@@ -1,5 +1,6 @@
 package org.example;
 import io.github.cdimascio.dotenv.Dotenv;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -12,6 +13,9 @@ import org.example.Commands.CommandManager;
 import org.example.Listeners.EventListeners;
 
 import javax.security.auth.login.LoginException;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class Main {
     private final Dotenv config;
     private final ShardManager shardManager;
@@ -20,9 +24,17 @@ public class Main {
      * Loads environment variables and builds the bot shard manager.
      * @throws LoginException occurs when bot token is invalid.
      */
+
+    private String[] messages={"Ananı1","Babanı"};
+    private int currentIndex=0;
+//Run this once
+
     public Main() throws LoginException {
         config = Dotenv.configure().load();
         String token = config.get("TOKEN");
+
+
+
 
         DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(token);
         builder.setStatus(OnlineStatus.ONLINE);
@@ -32,7 +44,14 @@ public class Main {
         builder.setChunkingFilter(ChunkingFilter.ALL);
         builder.enableCache(CacheFlag.ONLINE_STATUS);
 
+
         shardManager = builder.build();
+        new Timer().schedule(new TimerTask(){
+            public void run(){
+                builder.setActivity(Activity.watching(messages[currentIndex]));
+                currentIndex=(currentIndex+1)%messages.length;
+
+            }},0,30_000);
 
        shardManager.addEventListener(new EventListeners(config),new CommandManager());
 
