@@ -1,6 +1,7 @@
 package org.example.RandomCat;
 
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class RandomCat {
@@ -18,7 +19,8 @@ public class RandomCat {
             }
             String result = sb.toString();
             result = result.replaceAll("<[^>]*>", "");
-            fact = result.substring(result.indexOf("fact")+7,result.indexOf("length")-3);
+            byte[] bytes = result.substring(result.indexOf("fact")+7,result.indexOf("length")-3).getBytes(StandardCharsets.UTF_8);
+            fact =  new String(bytes, StandardCharsets.ISO_8859_1);
            // System.out.println(fact);
 
         }catch (Exception e){
@@ -36,7 +38,7 @@ public class RandomCat {
             }
             String result2 = bs.toString();
             result2 = result2.replaceAll("<[^>]*>", "");
-            ImageURL = result2.substring(result2.indexOf("https"),result2.indexOf("jpg")+3);
+            ImageURL = new String(result2.substring(result2.indexOf("https"),result2.indexOf("jpg")+3));
             //System.out.println(ImageURL);
 
         }catch (Exception e){

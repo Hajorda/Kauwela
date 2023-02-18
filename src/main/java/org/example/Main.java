@@ -13,8 +13,9 @@ import org.example.Commands.CommandManager;
 import org.example.Listeners.EventListeners;
 
 import javax.security.auth.login.LoginException;
-import java.util.Timer;
-import java.util.TimerTask;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Main {
     private final Dotenv config;
@@ -46,12 +47,19 @@ public class Main {
 
 
         shardManager = builder.build();
-        new Timer().schedule(new TimerTask(){
-            public void run(){
+
+    /*    Timer timer = new Timer(3000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 builder.setActivity(Activity.watching(messages[currentIndex]));
                 currentIndex=(currentIndex+1)%messages.length;
+                System.out.println("Çalıştı");
+                System.out.println(currentIndex);
+                builder.build();
+            }
+        });
+        timer.start();*/
 
-            }},0,30_000);
 
        shardManager.addEventListener(new EventListeners(config),new CommandManager());
 

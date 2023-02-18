@@ -26,8 +26,10 @@ public class EventListeners extends ListenerAdapter {
         String message = event.getMessage().getContentRaw();
         String pre = dot.get("PREFIX");
         if(message.equalsIgnoreCase("Ali")){
+
             event.getChannel().sendMessageFormat("Enayi").queue();
         }else if (message.equalsIgnoreCase(pre +"annen")){
+
             event.getChannel().sendMessageFormat("Baban").queue();
         } else if (message.equalsIgnoreCase(pre+"ping")) {
             EmbedBuilder eb = new EmbedBuilder();
@@ -64,6 +66,9 @@ public class EventListeners extends ListenerAdapter {
 
 
     }
+
+
+
 }
 
 

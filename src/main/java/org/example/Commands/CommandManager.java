@@ -36,15 +36,18 @@ public class CommandManager extends ListenerAdapter {
         String command = event.getName();
 
         if (command.equals("8top")){
+
             randomNumber = random.nextInt(0,embedBuilders.size());
 
             EmbedBuilder soru = new EmbedBuilder().setDescription(event.getOptions().get(0).getAsString()).setTitle("Soru");
             event.replyEmbeds(soru.build(),embedBuilders.get(randomNumber).setColor(Color.red).build()).queue();
 
         } else if (command.equals("kedy")) {
+
             RandomCat kedy = new RandomCat();
             System.out.println(kedy.getFact());
-            EmbedBuilder randomkedi = new EmbedBuilder().setDescription(kedy.getFact()).setImage(kedy.getImageURL());
+            EmbedBuilder randomkedi = new EmbedBuilder().setDescription("**Fact:**"+kedy.getFact()).setImage(kedy.getImageURL());
+
             event.replyEmbeds(randomkedi.build()).queue();
 
         }
@@ -54,7 +57,9 @@ public class CommandManager extends ListenerAdapter {
     public void onReady(@NotNull ReadyEvent event) {
         List<CommandData> commandData = new ArrayList<CommandData>();
         commandData.add(Commands.slash("8top","Anneni sor").addOption(OptionType.STRING,"soru","Sorunu sor bakem",true));
+         commandData.add(Commands.slash("kedy","Günlük kedy dozunu karşılar"));
         event.getJDA().updateCommands().addCommands(commandData).queue();
+
     }*/
 
 
