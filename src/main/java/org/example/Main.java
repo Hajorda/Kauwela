@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.sharding.ShardManager;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
+import org.example.Commands.CommandManager;
 import org.example.Listeners.EventListeners;
 
 import javax.security.auth.login.LoginException;
@@ -26,13 +27,17 @@ public class Main {
         DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(token);
         builder.setStatus(OnlineStatus.ONLINE);
         builder.setActivity(Activity.watching("Ananı"));
-        builder.enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_PRESENCES,GatewayIntent.GUILD_INVITES,GatewayIntent.GUILD_MEMBERS);
+        builder.enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_PRESENCES,GatewayIntent.GUILD_INVITES,GatewayIntent.GUILD_MEMBERS,GatewayIntent.MESSAGE_CONTENT);
         builder.setMemberCachePolicy(MemberCachePolicy.ALL);
         builder.setChunkingFilter(ChunkingFilter.ALL);
         builder.enableCache(CacheFlag.ONLINE_STATUS);
 
         shardManager = builder.build();
-       EventListeners eventListeners = new EventListeners();
+
+       shardManager.addEventListener(new EventListeners(config),new CommandManager());
+
+
+
 
     }
 
@@ -48,6 +53,7 @@ public class Main {
      */
     public ShardManager getShardManager() { return shardManager; }
 
+
     /**
      * Main method where we start our bot.
      */
@@ -55,6 +61,7 @@ public class Main {
         try {
 
             Main bot = new Main();
+
 
         } catch (LoginException e) {
             System.out.println("ERROR: Provided bot token is invalid!");
