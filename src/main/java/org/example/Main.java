@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.example.Commands.CommandManager;
 import org.example.Listeners.EventListeners;
+import org.example.Listeners.GuildListener;
 
 import javax.security.auth.login.LoginException;
 import javax.swing.*;
@@ -61,7 +62,7 @@ public class Main {
         timer.start();*/
 
 
-       shardManager.addEventListener(new EventListeners(config),new CommandManager());
+       shardManager.addEventListener(new EventListeners(config),new CommandManager(),new GuildListener());
 
 
 
