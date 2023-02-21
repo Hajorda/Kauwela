@@ -3,6 +3,7 @@ package org.example.Listeners;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
+import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.awt.*;
@@ -62,4 +63,22 @@ public class GuildListener extends ListenerAdapter {
 
         event.getJDA().getGuildById("984469721455919174").getTextChannelById("1077707638596448276").sendMessageEmbeds(guildLeft.build()).queue();
     }
+
+    //Botun çalışmaya başladığında göndereceği mesaj
+    @Override
+    public void onReady(ReadyEvent event) {
+    String date = java.time.LocalTime.now()+"";
+        EmbedBuilder startEmbed = new EmbedBuilder()
+                .setColor(new Color(16, 208, 26))
+                .setThumbnail("https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
+                .setFooter("Kauwela Bot")
+                .setAuthor("Bot başlatıldı!")
+                .addField("Bot "+date.substring(0,5)+" saatinde çalışmaya başladı.","",false);
+
+        event.getJDA().getGuildById("984469721455919174").getTextChannelById("1077722638643908679").sendMessageEmbeds(startEmbed.build()).queue();
+
+
+    }
+
+
 }
