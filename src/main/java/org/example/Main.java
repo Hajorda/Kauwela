@@ -1,6 +1,5 @@
 package org.example;
 import io.github.cdimascio.dotenv.Dotenv;
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -10,13 +9,10 @@ import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.example.Commands.CommandManager;
-import org.example.Listeners.EventListeners;
 import org.example.Listeners.GuildListener;
+import org.example.Listeners.MessageListener;
 
 import javax.security.auth.login.LoginException;
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Main {
     private final Dotenv config;
@@ -62,7 +58,7 @@ public class Main {
         timer.start();*/
 
 
-       shardManager.addEventListener(new EventListeners(config),new CommandManager(),new GuildListener());
+       shardManager.addEventListener(new CommandManager(),new GuildListener(),new MessageListener(config));
 
 
 
