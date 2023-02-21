@@ -1,4 +1,5 @@
 package org.example;
+
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -24,63 +25,65 @@ public class Main {
 
     /**
      * Loads environment variables and builds the bot shard manager.
+     * 
      * @throws LoginException occurs when bot token is invalid.
      */
 
-    private String[] messages={"Ananı1","Babanı"};
-    private int currentIndex=0;
-//Run this once
+    private String[] messages = { "Ananı1", "Babanı" };
+    private int currentIndex = 0;
+    // Run this once
 
     public Main() throws LoginException {
         config = Dotenv.configure().load();
         String token = config.get("TOKEN");
 
-
-
-
         DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(token);
         builder.setStatus(OnlineStatus.ONLINE);
         builder.setActivity(Activity.watching("Ananı"));
-        builder.enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_PRESENCES,GatewayIntent.GUILD_INVITES,GatewayIntent.GUILD_MEMBERS,GatewayIntent.MESSAGE_CONTENT);
+        builder.enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_PRESENCES,
+                GatewayIntent.GUILD_INVITES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.MESSAGE_CONTENT);
         builder.setMemberCachePolicy(MemberCachePolicy.ALL);
         builder.setChunkingFilter(ChunkingFilter.ALL);
         builder.enableCache(CacheFlag.ONLINE_STATUS);
 
-
         shardManager = builder.build();
 
-    /*    Timer timer = new Timer(3000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                builder.setActivity(Activity.watching(messages[currentIndex]));
-                currentIndex=(currentIndex+1)%messages.length;
-                System.out.println("Çalıştı");
-                System.out.println(currentIndex);
-                builder.build();
-            }
-        });
-        timer.start();*/
+        /*
+         * Timer timer = new Timer(3000, new ActionListener() {
+         * 
+         * @Override
+         * public void actionPerformed(ActionEvent e) {
+         * builder.setActivity(Activity.watching(messages[currentIndex]));
+         * currentIndex=(currentIndex+1)%messages.length;
+         * System.out.println("Çalıştı");
+         * System.out.println(currentIndex);
+         * builder.build();
+         * }
+         * });
+         * timer.start();
+         */
 
-
-       shardManager.addEventListener(new EventListeners(config),new CommandManager(),new GuildListener());
-
-
-
+        shardManager.addEventListener(new EventListeners(config), new CommandManager(), new GuildListener());
 
     }
 
     /**
      * Retrieves the bot environment variables.
+     * 
      * @return the DotEnv instance for the bot.
      */
-    public Dotenv getConfig() { return config; }
+    public Dotenv getConfig() {
+        return config;
+    }
 
     /**
      * Retrieves the bot shard manager.
+     * 
      * @return the ShardManager instance for the bot.
      */
-    public ShardManager getShardManager() { return shardManager; }
-
+    public ShardManager getShardManager() {
+        return shardManager;
+    }
 
     /**
      * Main method where we start our bot.
@@ -90,9 +93,9 @@ public class Main {
 
             Main bot = new Main();
 
-
         } catch (LoginException e) {
             System.out.println("ERROR: Provided bot token is invalid!");
+            // engin iz bezt
         }
     }
 }
