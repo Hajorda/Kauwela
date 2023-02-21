@@ -1,0 +1,95 @@
+Index: src/main/java/org/example/Commands/CommandManager.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.example.Commands;\r\n\r\nimport net.dv8tion.jda.api.EmbedBuilder;\r\nimport net.dv8tion.jda.api.events.guild.GuildReadyEvent;\r\nimport net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;\r\nimport net.dv8tion.jda.api.events.session.ReadyEvent;\r\nimport net.dv8tion.jda.api.hooks.ListenerAdapter;\r\nimport net.dv8tion.jda.api.interactions.commands.OptionType;\r\nimport net.dv8tion.jda.api.interactions.commands.build.CommandData;\r\nimport net.dv8tion.jda.api.interactions.commands.build.Commands;\r\nimport org.example.RandomCat.RandomCat;\r\nimport org.jetbrains.annotations.NotNull;\r\n\r\nimport java.awt.*;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\nimport java.util.Random;\r\n\r\npublic class CommandManager extends ListenerAdapter {\r\n    private List<EmbedBuilder> embedBuilders ;\r\n    private Random random;\r\n    private int randomNumber;\r\n\r\n    public CommandManager(){\r\n        embedBuilders = new ArrayList<>();\r\n        random = new Random();\r\n        embedBuilders.add(new EmbedBuilder().setDescription(\"Evet\"));\r\n        embedBuilders.add(new EmbedBuilder().setDescription(\"Hayır\"));\r\n        embedBuilders.add(new EmbedBuilder().setDescription(\"Belki\"));\r\n        embedBuilders.add(new EmbedBuilder().setDescription(\"Kesin bir şey diyemem\"));\r\n        embedBuilders.add(new EmbedBuilder().setDescription(\"Asla Enayi\"));\r\n        embedBuilders.add(new EmbedBuilder().setDescription(\"İnan bilmiyorum\").setImage(\"https://galeri14.uludagsozluk.com/844/inan-bilmiyorum_2286860.jpg\"));\r\n    }\r\n    @Override\r\n    public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {\r\n        String command = event.getName();\r\n\r\n        if (command.equals(\"8top\")){\r\n\r\n            randomNumber = random.nextInt(0,embedBuilders.size());\r\n\r\n            EmbedBuilder soru = new EmbedBuilder().setDescription(event.getOptions().get(0).getAsString()).setTitle(\"Soru\");\r\n            event.replyEmbeds(soru.build(),embedBuilders.get(randomNumber).setColor(Color.red).build()).queue();\r\n\r\n        } else if (command.equals(\"kedy\")) {\r\n\r\n            RandomCat kedy = new RandomCat();\r\n            System.out.println(kedy.getFact());\r\n            EmbedBuilder randomkedi = new EmbedBuilder().setDescription(\"**Fact:**\"+kedy.getFact()).setImage(kedy.getImageURL());\r\n\r\n            event.replyEmbeds(randomkedi.build()).queue();\r\n\r\n        }\r\n    }\r\n\r\n  /*  @Override\r\n    public void onReady(@NotNull ReadyEvent event) {\r\n        List<CommandData> commandData = new ArrayList<CommandData>();\r\n        commandData.add(Commands.slash(\"8top\",\"Anneni sor\").addOption(OptionType.STRING,\"soru\",\"Sorunu sor bakem\",true));\r\n         commandData.add(Commands.slash(\"kedy\",\"Günlük kedy dozunu karşılar\"));\r\n        event.getJDA().updateCommands().addCommands(commandData).queue();\r\n\r\n    }*/\r\n\r\n\r\n    /*Test için ideal*/\r\n    @Override\r\n    public void onGuildReady(GuildReadyEvent event) {\r\n        List<CommandData> commandData = new ArrayList<CommandData>();\r\n\r\n        commandData.add(Commands.slash(\"8top\",\"Anneni sor\").addOption(OptionType.STRING,\"soru\",\"Sorunu sor bakem\",true));\r\n        commandData.add(Commands.slash(\"kedy\",\"Günlük kedy dozunu karşılar\"));\r\n        event.getGuild().updateCommands().addCommands(commandData).queue();\r\n\r\n\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/example/Commands/CommandManager.java b/src/main/java/org/example/Commands/CommandManager.java
+--- a/src/main/java/org/example/Commands/CommandManager.java	
++++ b/src/main/java/org/example/Commands/CommandManager.java	
+@@ -8,11 +8,13 @@
+ import net.dv8tion.jda.api.interactions.commands.OptionType;
+ import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+ import net.dv8tion.jda.api.interactions.commands.build.Commands;
++import net.dv8tion.jda.api.interactions.components.ItemComponent;
+ import org.example.RandomCat.RandomCat;
+ import org.jetbrains.annotations.NotNull;
+ 
+ import java.awt.*;
+ import java.util.ArrayList;
++import java.util.Collection;
+ import java.util.List;
+ import java.util.Random;
+ 
+@@ -70,6 +72,7 @@
+ 
+         commandData.add(Commands.slash("8top","Anneni sor").addOption(OptionType.STRING,"soru","Sorunu sor bakem",true));
+         commandData.add(Commands.slash("kedy","Günlük kedy dozunu karşılar"));
++        commandData.add(Commands.slash("bil","Anani bil!"));
+         event.getGuild().updateCommands().addCommands(commandData).queue();
+ 
+ 
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"5ee6ee57-111b-4285-a23e-f17abe0fb43a\" name=\"Changes\" comment=\"Çalışmıyor şuanlık\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/org/example/Commands/CommandManager.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/org/example/Commands/CommandManager.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/org/example/Listeners/EventListeners.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/org/example/Listeners/EventListeners.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/org/example/Listeners/MessageListener.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/org/example/Listeners/MessageListener.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/org/example/Main.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/org/example/Main.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/org/example/RandomCat/RandomCat.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/org/example/RandomCat/RandomCat.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2LbDdQZd566ZTC5xZPiAIOLVxkk\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;\r\n  }\r\n}</component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"5ee6ee57-111b-4285-a23e-f17abe0fb43a\" name=\"Changes\" comment=\"\" />\r\n      <created>1676130978331</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1676130978331</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Ananı izliyor artık\">\r\n      <created>1676134285500</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1676134285500</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Çalışmıyor şuanlık\">\r\n      <created>1676225630307</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1676225630307</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"3\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Ananı izliyor artık\" />\r\n    <MESSAGE value=\"Çalışmıyor şuanlık\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Çalışmıyor şuanlık\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	
++++ b/.idea/workspace.xml	
+@@ -4,13 +4,9 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="5ee6ee57-111b-4285-a23e-f17abe0fb43a" name="Changes" comment="Çalışmıyor şuanlık">
++    <list default="true" id="5ee6ee57-111b-4285-a23e-f17abe0fb43a" name="Changes" comment="Ananı izliyor artık">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Commands/CommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/CommandManager.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Listeners/EventListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Listeners/EventListeners.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Listeners/MessageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Listeners/MessageListener.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/RandomCat/RandomCat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/RandomCat/RandomCat.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -39,7 +35,10 @@
+   <component name="PropertiesComponent">{
+   &quot;keyToString&quot;: {
+     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
++    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
++    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+   }
+ }</component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+@@ -58,14 +57,7 @@
+       <option name="project" value="LOCAL" />
+       <updated>1676134285500</updated>
+     </task>
+-    <task id="LOCAL-00002" summary="Çalışmıyor şuanlık">
+-      <created>1676225630307</created>
+-      <option name="number" value="00002" />
+-      <option name="presentableId" value="LOCAL-00002" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1676225630307</updated>
+-    </task>
+-    <option name="localTasksCounter" value="3" />
++    <option name="localTasksCounter" value="2" />
+     <servers />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+@@ -81,7 +73,6 @@
+   </component>
+   <component name="VcsManagerConfiguration">
+     <MESSAGE value="Ananı izliyor artık" />
+-    <MESSAGE value="Çalışmıyor şuanlık" />
+-    <option name="LAST_COMMIT_MESSAGE" value="Çalışmıyor şuanlık" />
++    <option name="LAST_COMMIT_MESSAGE" value="Ananı izliyor artık" />
+   </component>
+ </project>
+\ No newline at end of file
