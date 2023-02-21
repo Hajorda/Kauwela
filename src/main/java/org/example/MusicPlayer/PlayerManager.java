@@ -48,6 +48,21 @@ public class PlayerManager {
         return null;
     }
 
+    private long[] calculateTime(long time){
+        long[] duration = new long[4];
+       duration[0]= time / (1000 * 60 * 60);
+        time = time % (1000 * 60 * 60);
+        duration[1]= time / (1000 * 60);
+        time = time % (1000 * 60);
+        duration[2]= time / 1000;
+        time = time % 1000;
+        duration[3] = time;
+        return  duration;
+
+
+    }
+
+
 
 
     public GuildMusicManager getMusicManager(Guild guild) {
@@ -66,28 +81,18 @@ public class PlayerManager {
         this.audioPlayerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
-
                 musicManager.scheduler.queue(track);
-
-               AudioTrackInfo  audioTrackInfo = track.getInfo();
-
-               long time = audioTrackInfo.length;
-                long hour = time / (1000 * 60 * 60);
-                time = time % (1000 * 60 * 60);
-                long minute = time / (1000 * 60);
-                time = time % (1000 * 60);
-                long second = time / 1000;
-                time = time % 1000;
+                AudioTrackInfo  audioTrackInfo = track.getInfo();
+                long[] times = calculateTime(audioTrackInfo.length);
                 EmbedBuilder embedBuilder = new EmbedBuilder();
                 System.out.println("çalıştı");
                 embedBuilder.setTitle(audioTrackInfo.author)
                         .addField("",audioTrackInfo.title,false)
-                        .addField("",hour+":"+minute+":"+second+":"+time,false)
+                        .addField("",times[0]+":"+times[1]+":"+times[2]+":"+times[3],false)
                         .setThumbnail(thumbnail(audioTrackInfo.uri));
 
                 System.out.println(audioTrackInfo.title);
                 channel.sendMessageEmbeds(embedBuilder.build()).queue();
-
 
 
             }
@@ -97,9 +102,23 @@ public class PlayerManager {
                 final List<AudioTrack> tracks = playlist.getTracks();
 
 
+
                 for (final AudioTrack track : tracks) {
                     musicManager.scheduler.queue(track);
+
                 }
+                AudioTrackInfo  audioTrackInfo = tracks.get(0).getInfo();
+                long[] times = calculateTime(audioTrackInfo.length);
+                EmbedBuilder embedBuilder = new EmbedBuilder();
+                System.out.println("çalıştı");
+                embedBuilder.setTitle(audioTrackInfo.author)
+                        .addField("",audioTrackInfo.title,false)
+                        .addField("",times[0]+":"+times[1]+":"+times[2]+":"+times[3],false)
+                        .setThumbnail(thumbnail(audioTrackInfo.uri));
+
+                System.out.println(audioTrackInfo.title);
+                channel.sendMessageEmbeds(embedBuilder.build()).queue();
+
             }
 
             @Override

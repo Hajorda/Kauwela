@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.UserSnowflake;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -36,6 +37,7 @@ public class CommandManager extends ListenerAdapter{
     private int randomNumber;
     private Dotenv env;
     private String botID;
+    public static TextChannel textChannel;
 
     public CommandManager() {
         env= Dotenv.configure().load();
@@ -110,7 +112,7 @@ public class CommandManager extends ListenerAdapter{
 
                 PlayerManager.getInstance().loadAndPlay(event.getChannel().asTextChannel(),event.getOptions().get(0).getAsString());
 
-
+                textChannel = event.getChannel().asTextChannel();
                 event.reply(event.getMember().getAsMention()+"tarafından listeye şarkı eklendi.").queue();
 
 
@@ -119,7 +121,7 @@ public class CommandManager extends ListenerAdapter{
 
             }
 
-        } else if (command.equals("stop")) {
+        } else if (command.equals("pause")) {
 
             GuildMusicManager musicManager =PlayerManager.getInstance().getMusicManager(event.getGuild());
             musicManager.scheduler.player.stopTrack();
@@ -175,7 +177,7 @@ public class CommandManager extends ListenerAdapter{
             commandData.add(Commands.slash("play", "Hardalı dinle çok iyi grup").addOption(OptionType.STRING, "music", "Gece Vakti'ini açmazsan darılırım", true));
             commandData.add(Commands.slash("uptime", "Bakalım köle bot ne kadardır çalışıyor"));
             commandData.add(Commands.slash("leave", "sg buradan bot"));
-            commandData.add(Commands.slash("stop", "Şarkıyı durdurur."));
+            commandData.add(Commands.slash("pause", "Şarkıyı durdurur."));
             commandData.add(Commands.slash("8top", "Anneni sor").addOption(OptionType.STRING, "soru", "Sorunu sor bakem", true));
             commandData.add(Commands.slash("kedy", "Günlük kedy dozunu karşılar"));
             event.getGuild().updateCommands().addCommands(commandData).queue();
