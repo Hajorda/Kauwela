@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -46,7 +47,12 @@ public class MessageListener extends ListenerAdapter {
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         String message = event.getMessage().getContentRaw();
+
+
+
+
         if (message.equals(prefix+"ping")){
+            event.getMessage().addReaction(Emoji.fromUnicode("U+2705")).queue();
             EmbedBuilder eb = new EmbedBuilder();
 
                 eb.setTitle("KauwelaBot'un Durumu", null);
@@ -69,7 +75,7 @@ public class MessageListener extends ListenerAdapter {
 
         }
         else if(message.equals(prefix+"guncelle")){
-
+            event.getMessage().addReaction(Emoji.fromUnicode("U+2705")).queue();
             try {
 
                 int tm = totalMember(event);
@@ -92,7 +98,7 @@ public class MessageListener extends ListenerAdapter {
             }
         }
         else if(message.equalsIgnoreCase(prefix+"kapat")){
-
+            event.getMessage().addReaction(Emoji.fromUnicode("U+2705")).queue();
            String userId = event.getAuthor().getId();
 
            if(userId.equals("477144014655586315") || userId.equals("362965641357033472") || userId.equals("358698333751214080")) {
