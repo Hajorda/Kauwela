@@ -17,6 +17,7 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.managers.AudioManager;
+import org.example.ChatGPT.ChatGPT;
 import org.example.MusicPlayer.GuildMusicManager;
 import org.example.MusicPlayer.PlayerManager;
 import org.example.MusicPlayer.TrackScheduler;
@@ -56,7 +57,7 @@ public class CommandManager extends ListenerAdapter{
 
 
     @Override
-    public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
+    public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event){
         String command = event.getName();
 
         if (command.equals("8top")) {
@@ -154,6 +155,18 @@ public class CommandManager extends ListenerAdapter{
 
         }else if (command.equals("skip")) {
 
+        }else if (command.equals("ask")){
+            System.out.println(event.getOptions().get(0).getAsString());
+
+            try {
+
+                event.reply(ChatGPT.chatGPT(event.getOptions().get(0).getAsString())).queue();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                throw new RuntimeException(e);
+
+
+            }
         }
 
     }
@@ -177,9 +190,11 @@ public class CommandManager extends ListenerAdapter{
             commandData.add(Commands.slash("play", "Hardalı dinle çok iyi grup").addOption(OptionType.STRING, "music", "Gece Vakti'ini açmazsan darılırım", true));
             commandData.add(Commands.slash("uptime", "Bakalım köle bot ne kadardır çalışıyor"));
             commandData.add(Commands.slash("leave", "sg buradan bot"));
+            commandData.add(Commands.slash("skip", "kardeşim sıkıldım şarkıyı geç."));
             commandData.add(Commands.slash("pause", "Şarkıyı durdurur."));
             commandData.add(Commands.slash("8top", "Anneni sor").addOption(OptionType.STRING, "soru", "Sorunu sor bakem", true));
             commandData.add(Commands.slash("kedy", "Günlük kedy dozunu karşılar"));
+            commandData.add(Commands.slash("ask","ChatGPT ile flörtleşebilirsin").addOption(OptionType.STRING,"question","Anana sor",true));
             event.getGuild().updateCommands().addCommands(commandData).queue();
 
 

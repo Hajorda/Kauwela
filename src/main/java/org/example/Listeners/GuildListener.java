@@ -78,7 +78,6 @@ public class GuildListener extends ListenerAdapter {
         event.getJDA().getGuildById("984469721455919174").getTextChannelById("1077722638643908679").sendMessageEmbeds(startEmbed.build()).queue();
 
 //za
-
     }
 
 
