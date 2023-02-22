@@ -101,7 +101,11 @@ public class MessageListener extends ListenerAdapter {
                     .addField("Bot "+user+" tarafından kapatıldı.", "", false);
 
             event.getJDA().getGuildById("984469721455919174").getTextChannelById("1077722638643908679").sendMessageEmbeds(endEmbed.build()).queue();
-
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             event.getJDA().shutdown();
             System.exit(0);
 

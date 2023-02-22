@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ee6ee57-111b-4285-a23e-f17abe0fb43a" name="Changes" comment="Bot başlatma mesajı uptade">
+    <list default="true" id="5ee6ee57-111b-4285-a23e-f17abe0fb43a" name="Changes" comment="Yazdığım en iyi bot">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Listeners/MessageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Listeners/MessageListener.java" afterDir="false" />
     </list>
@@ -101,21 +101,7 @@
       <option name="project" value="LOCAL" />
       <updated>1677020625105</updated>
     </task>
-    <task id="LOCAL-00007" summary="Bot aktif olunca mesaj atma">
-      <created>1677023822490</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1677023822490</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Bot başlatma mesajı uptade">
-      <created>1677093000419</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1677093000419</updated>
-    </task>
-    <option name="localTasksCounter" value="9" />
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -135,9 +121,6 @@
     <MESSAGE value="Modified" />
     <MESSAGE value="Botun yeni bir sunucuya girince gönderileceği mesajlar ayarlandı" />
     <MESSAGE value="Bot aktif olunca mesaj gönderme" />
-    <MESSAGE value="Bot aktif olunca mesaj atma" />
-    <MESSAGE value="Voice Channel Stats" />
-    <MESSAGE value="Bot başlatma mesajı uptade" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bot başlatma mesajı uptade" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bot aktif olunca mesaj gönderme" />
   </component>
 </project>
