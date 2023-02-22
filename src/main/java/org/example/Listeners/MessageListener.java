@@ -10,6 +10,8 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.awt.*;
 
+import static java.lang.System.exit;
+
 public class MessageListener extends ListenerAdapter {
     private Dotenv dot;
     private String prefix;
@@ -84,6 +86,25 @@ public class MessageListener extends ListenerAdapter {
             catch (Exception e){
                 System.out.println(e.getMessage());
             }
+        }
+        else if(message.equalsIgnoreCase(prefix+"kapat")){
+            String user = "Bilinmeyen";
+            user = event.getAuthor().getName();
+
+
+
+            EmbedBuilder endEmbed = new EmbedBuilder()
+                    .setColor(new Color(231, 9, 9))
+                    .setThumbnail("https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
+                    .setFooter("Kauwela Bot","https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
+                    .setAuthor("Bot Kapatıldı!")
+                    .addField("Bot "+user+" tarafından kapatıldı.", "", false);
+
+            event.getJDA().getGuildById("984469721455919174").getTextChannelById("1077722638643908679").sendMessageEmbeds(endEmbed.build()).queue();
+
+            event.getJDA().shutdown();
+            System.exit(0);
+
         }
 
     }
