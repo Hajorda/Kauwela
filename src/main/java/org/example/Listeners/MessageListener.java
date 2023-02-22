@@ -9,6 +9,9 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.awt.*;
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
+import java.net.InetAddress;
 
 import static java.lang.System.exit;
 
@@ -88,26 +91,49 @@ public class MessageListener extends ListenerAdapter {
             }
         }
         else if(message.equalsIgnoreCase(prefix+"kapat")){
-            String user = "Bilinmeyen";
-            user = event.getAuthor().getName();
 
+           String userId = event.getAuthor().getId();
 
+           if(userId.equals("477144014655586315") || userId.equals("362965641357033472") || userId.equals("358698333751214080")) {
+               String user = "Bilinmeyen";
+               user = event.getAuthor().getName();
 
-            EmbedBuilder endEmbed = new EmbedBuilder()
-                    .setColor(new Color(231, 9, 9))
-                    .setThumbnail("https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
-                    .setFooter("Kauwela Bot","https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
-                    .setAuthor("Bot Kapatıldı!")
-                    .addField("Bot "+user+" tarafından kapatıldı.", "", false);
+               String date = java.time.LocalTime.now() + "";
 
-            event.getJDA().getGuildById("984469721455919174").getTextChannelById("1077722638643908679").sendMessageEmbeds(endEmbed.build()).queue();
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            event.getJDA().shutdown();
-            System.exit(0);
+               RuntimeMXBean rb = ManagementFactory.getRuntimeMXBean();
+               long uptime = rb.getUptime();
+               System.out.println(uptime);
+               long day = uptime / (1000 * 60 * 60 * 24);
+               uptime = uptime % (1000 * 60 * 60 * 24);
+               long hour = uptime / (1000 * 60 * 60);
+               uptime = uptime % (1000 * 60 * 60);
+               long minute = uptime / (1000 * 60);
+               uptime = uptime % (1000 * 60);
+               long second = uptime / 1000;
+               uptime = uptime % 1000;
+
+               EmbedBuilder endEmbed = new EmbedBuilder()
+                       .setColor(new Color(231, 9, 9))
+                       .setThumbnail("https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
+                       .setFooter("Kauwela Bot", "https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
+                       .setAuthor("Bot Kapatıldı!")
+                       .addField("Bot " + user + " tarafından " + date.substring(0, 5) + " zamanında" + " kapatıldı.", "", false)
+                       .addField("Toplam Çalışma Süresi:", day + " gün, " + hour + " saat, " + minute + " dakika, " + second + " saniye", false);
+
+               event.getJDA().getGuildById("984469721455919174").getTextChannelById("1077722638643908679").sendMessageEmbeds(endEmbed.build()).queue();
+
+               try {
+                   Thread.sleep(3000);
+               } catch (InterruptedException e) {
+                   throw new RuntimeException(e);
+               }
+
+               event.getJDA().shutdown();
+               System.exit(0);
+           }
+           else {
+               event.getChannel().sendMessage("Bu komutu kullanmak için Yetkili olman lazım.").queue();
+           }
 
         }
 

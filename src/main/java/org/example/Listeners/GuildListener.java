@@ -77,7 +77,7 @@ public class GuildListener extends ListenerAdapter {
                 .setThumbnail("https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
                 .setFooter("Kauwela Bot","https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
                 .setAuthor("Bot başlatıldı!")
-                .addField("Bot " + date.substring(0, 5) + " saatinde " + SystemName +" tarafından çalışmaya başladı.", "", false)
+                .addField("Bot " + SystemName + " tarafından " + date.substring(0, 5) +" zamanında çalışmaya başladı.", "", false)
                 .addField("/uptime komudunu kullanarak çalışma süresini öğrenebilirsin.", "", false);
 
         event.getJDA().getGuildById("984469721455919174").getTextChannelById("1077722638643908679").sendMessageEmbeds(startEmbed.build()).queue();
