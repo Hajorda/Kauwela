@@ -2,6 +2,7 @@ package org.example.Listeners;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
@@ -136,7 +137,6 @@ public class MessageListener extends ListenerAdapter {
            }
 
         }
-
     }
 
 
