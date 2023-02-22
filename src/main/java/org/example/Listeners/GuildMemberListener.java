@@ -35,7 +35,7 @@ public class GuildMemberListener extends ListenerAdapter {
         String avatarUrl = event.getUser().getEffectiveAvatarUrl();
         String name = event.getUser().getName();
 
-        event.getGuild().getDefaultChannel().asTextChannel().sendMessage(name+" katıldı").queue();
+        event.getGuild().getDefaultChannel().asTextChannel().sendMessage(name+" ayrıldı").queue();
 
         EmbedBuilder leaveEmbed = new EmbedBuilder()
                 .setColor(new Color(231, 9, 9))
