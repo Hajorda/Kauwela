@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.awt.*;
-
+import java.net.InetAddress;
 public class GuildListener extends ListenerAdapter {
 
 
@@ -67,16 +67,24 @@ public class GuildListener extends ListenerAdapter {
     //Botun çalışmaya başladığında göndereceği mesaj
     @Override
     public void onReady(ReadyEvent event) {
+
     String date = java.time.LocalTime.now()+"";
+    try {
+        String SystemName = InetAddress.getLocalHost().getHostName() + "";
+
         EmbedBuilder startEmbed = new EmbedBuilder()
                 .setColor(new Color(16, 208, 26))
                 .setThumbnail("https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
-                .setFooter("Kauwela Bot")
+                .setFooter("Kauwela Bot","https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
                 .setAuthor("Bot başlatıldı!")
-                .addField("Bot "+date.substring(0,5)+" saatinde çalışmaya başladı.","",false);
+                .addField("Bot " + date.substring(0, 5) + " saatinde " + SystemName +" tarafından çalışmaya başladı.", "", false)
+                .addField("/uptime komudunu kullanarak çalışma süresini öğrenebilirsin.", "", false);
 
         event.getJDA().getGuildById("984469721455919174").getTextChannelById("1077722638643908679").sendMessageEmbeds(startEmbed.build()).queue();
-
+    }
+    catch (Exception e){
+        System.out.println(e.getMessage());
+    }
 //za
     }
 

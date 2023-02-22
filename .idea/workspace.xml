@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ee6ee57-111b-4285-a23e-f17abe0fb43a" name="Changes" comment="Bot aktif olunca mesaj atma">
+    <list default="true" id="5ee6ee57-111b-4285-a23e-f17abe0fb43a" name="Changes" comment="Voice Channel Stats">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Listeners/GuildListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Listeners/GuildListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -128,6 +129,7 @@
     <MESSAGE value="Botun yeni bir sunucuya girince gönderileceği mesajlar ayarlandı" />
     <MESSAGE value="Bot aktif olunca mesaj gönderme" />
     <MESSAGE value="Bot aktif olunca mesaj atma" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bot aktif olunca mesaj atma" />
+    <MESSAGE value="Voice Channel Stats" />
+    <option name="LAST_COMMIT_MESSAGE" value="Voice Channel Stats" />
   </component>
 </project>
