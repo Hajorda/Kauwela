@@ -14,6 +14,8 @@ import org.example.MusicPlayer.GuildMusicManager;
 import org.example.MusicPlayer.PlayerManager;
 
 import java.awt.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GuildMemberListener extends ListenerAdapter {
 
@@ -63,11 +65,24 @@ public class GuildMemberListener extends ListenerAdapter {
                AudioManager audioManager = event.getGuild().getAudioManager();
                VoiceChannel memberchanne = event.getMember().getVoiceState().getChannel().asVoiceChannel();
                audioManager.openAudioConnection(memberchanne);
-               PlayerManager.getInstance().loadAndPlay(event.getGuild().getTextChannels().get(0),"https://www.youtube.com/watch?v=unPQQQ8RDKw");
+               PlayerManager.getInstance().loadAndPlayNonEmbed(event.getGuild().getTextChannels().get(0),"https://www.youtube.com/watch?v=unPQQQ8RDKw");
 
            }
 
        }
+        AudioManager audioManager = event.getGuild().getAudioManager();
+        VoiceChannel memberchanne = event.getMember().getVoiceState().getChannel().asVoiceChannel();
+        audioManager.openAudioConnection(memberchanne);
+        PlayerManager.getInstance().loadAndPlayNonEmbed(event.getGuild().getTextChannels().get(0),"https://www.youtube.com/watch?v=2kwA5T7AjXY");
+
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask(){
+            @Override
+            public void run() {
+                audioManager.closeAudioConnection();
+            }
+        };
+        timer.schedule(task,PlayerManager.getInstance().getDuration()+1000);
 
     }
 

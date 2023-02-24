@@ -16,9 +16,7 @@ import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PlayerManager {
     private static PlayerManager INSTANCE;
@@ -92,6 +90,7 @@ public class PlayerManager {
                         .setThumbnail(thumbnail(audioTrackInfo.uri));
 
                 System.out.println(audioTrackInfo.title);
+
                 channel.sendMessageEmbeds(embedBuilder.build()).queue();
 
 
@@ -139,6 +138,76 @@ public class PlayerManager {
         }
 
         return INSTANCE;
+    }
+    long duration;
+    public long getDuration() {
+        return duration;
+    }
+    public void loadAndPlayNonEmbed(TextChannel channel, String trackUrl) {
+        final GuildMusicManager musicManager = this.getMusicManager(channel.getGuild());
+
+        this.audioPlayerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
+
+
+
+
+            @Override
+            public void trackLoaded(AudioTrack track) {
+                musicManager.scheduler.queue(track);
+                AudioTrackInfo  audioTrackInfo = track.getInfo();
+                long[] times = calculateTime(audioTrackInfo.length);
+                EmbedBuilder embedBuilder = new EmbedBuilder();
+                System.out.println("çalıştı");
+                embedBuilder.setTitle(audioTrackInfo.author)
+                        .addField("",audioTrackInfo.title,false)
+                        .addField("",times[0]+":"+times[1]+":"+times[2]+":"+times[3],false)
+                        .setThumbnail(thumbnail(audioTrackInfo.uri));
+
+                System.out.println(audioTrackInfo.title);
+
+                duration = audioTrackInfo.length;
+
+
+
+
+            }
+
+            @Override
+            public void playlistLoaded(AudioPlaylist playlist) {
+                final List<AudioTrack> tracks = playlist.getTracks();
+
+
+
+                for (final AudioTrack track : tracks) {
+                    musicManager.scheduler.queue(track);
+
+                }
+                AudioTrackInfo  audioTrackInfo = tracks.get(0).getInfo();
+                long[] times = calculateTime(audioTrackInfo.length);
+                EmbedBuilder embedBuilder = new EmbedBuilder();
+                System.out.println("çalıştı");
+                embedBuilder.setTitle(audioTrackInfo.author)
+                        .addField("",audioTrackInfo.title,false)
+                        .addField("",times[0]+":"+times[1]+":"+times[2]+":"+times[3],false)
+                        .setThumbnail(thumbnail(audioTrackInfo.uri));
+
+                System.out.println(audioTrackInfo.title);
+
+
+                channel.sendMessageEmbeds(embedBuilder.build()).queue();
+
+            }
+
+            @Override
+            public void noMatches() {
+                //
+            }
+
+            @Override
+            public void loadFailed(FriendlyException exception) {
+                //
+            }
+        });
     }
 
 }
