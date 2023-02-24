@@ -70,19 +70,24 @@ public class GuildMemberListener extends ListenerAdapter {
            }
 
        }
-        AudioManager audioManager = event.getGuild().getAudioManager();
-        VoiceChannel memberchanne = event.getMember().getVoiceState().getChannel().asVoiceChannel();
-        audioManager.openAudioConnection(memberchanne);
-        PlayerManager.getInstance().loadAndPlayNonEmbed(event.getGuild().getTextChannels().get(0),"https://www.youtube.com/watch?v=2kwA5T7AjXY");
+        if (event.getChannelJoined() !=null) {
+            if (!(event.getMember().getUser().getId().equals("984469828008026192"))) {
 
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask(){
-            @Override
-            public void run() {
-                audioManager.closeAudioConnection();
+                AudioManager audioManager = event.getGuild().getAudioManager();
+                VoiceChannel memberchanne = event.getMember().getVoiceState().getChannel().asVoiceChannel();
+                audioManager.openAudioConnection(memberchanne);
+                PlayerManager.getInstance().loadAndPlayNonEmbed(event.getGuild().getTextChannels().get(0), "https://www.youtube.com/watch?v=2kwA5T7AjXY");
+
+                Timer timer = new Timer();
+                TimerTask task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        audioManager.closeAudioConnection();
+                    }
+                };
+                timer.schedule(task, PlayerManager.getInstance().getDuration() + 2000);
             }
-        };
-        timer.schedule(task,PlayerManager.getInstance().getDuration()+1000);
+        }
 
     }
 
