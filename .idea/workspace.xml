@@ -4,8 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ee6ee57-111b-4285-a23e-f17abe0fb43a" name="Changes" comment="Giriş Çıkış Komutları + Emoji ekleme">
+    <list default="true" id="5ee6ee57-111b-4285-a23e-f17abe0fb43a" name="Changes" comment="Thread">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/ChatGPT/ChatGPT.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Commands/CommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/CommandManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Listeners/GuildMemberListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Listeners/GuildMemberListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -115,28 +119,7 @@
       <option name="project" value="LOCAL" />
       <updated>1677093000419</updated>
     </task>
-    <task id="LOCAL-00009" summary="Katma komudu bitti">
-      <created>1677096033885</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1677096033885</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Katma komudu bitti">
-      <created>1677097265835</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1677097265835</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Giriş Çıkış Komutları + Emoji ekleme">
-      <created>1677102048181</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1677102048181</updated>
-    </task>
-    <option name="localTasksCounter" value="12" />
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -160,7 +143,6 @@
     <MESSAGE value="Voice Channel Stats" />
     <MESSAGE value="Bot başlatma mesajı uptade" />
     <MESSAGE value="Katma komudu bitti" />
-    <MESSAGE value="Giriş Çıkış Komutları + Emoji ekleme" />
-    <option name="LAST_COMMIT_MESSAGE" value="Giriş Çıkış Komutları + Emoji ekleme" />
+    <option name="LAST_COMMIT_MESSAGE" value="Katma komudu bitti" />
   </component>
 </project>

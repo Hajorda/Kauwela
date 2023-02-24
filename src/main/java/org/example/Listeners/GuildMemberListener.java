@@ -1,10 +1,17 @@
 package org.example.Listeners;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
+import net.dv8tion.jda.api.events.guild.voice.GenericGuildVoiceEvent;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceUpdateEvent;
+import net.dv8tion.jda.api.events.user.UserActivityStartEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.managers.AudioManager;
+import org.example.MusicPlayer.GuildMusicManager;
+import org.example.MusicPlayer.PlayerManager;
 
 import java.awt.*;
 
@@ -47,4 +54,22 @@ public class GuildMemberListener extends ListenerAdapter {
         event.getJDA().getGuildById("984469721455919174").getTextChannelById("984473410044305459").sendMessageEmbeds(leaveEmbed.build()).queue();
 
     }
+
+    @Override
+    public void onGuildVoiceUpdate(GuildVoiceUpdateEvent event) {
+        System.out.println("deneme1111");
+       if (event.getChannelJoined() !=null){
+           if (event.getMember().getUser().getId().equals("362965641357033472")){
+               AudioManager audioManager = event.getGuild().getAudioManager();
+               VoiceChannel memberchanne = event.getMember().getVoiceState().getChannel().asVoiceChannel();
+               audioManager.openAudioConnection(memberchanne);
+               PlayerManager.getInstance().loadAndPlay(event.getGuild().getTextChannels().get(0),"https://www.youtube.com/watch?v=unPQQQ8RDKw");
+
+           }
+
+       }
+
+    }
+
+
 }

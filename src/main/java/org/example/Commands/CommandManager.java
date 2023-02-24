@@ -17,6 +17,7 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.managers.AudioManager;
+import org.example.ChatGPT.ChatGPT;
 import org.example.MusicPlayer.GuildMusicManager;
 import org.example.MusicPlayer.PlayerManager;
 import org.example.MusicPlayer.TrackScheduler;
@@ -70,10 +71,12 @@ public class CommandManager extends ListenerAdapter{
 
             RandomCat kedy = new RandomCat();
             System.out.println(kedy.getFact());
-            EmbedBuilder randomkedi = new EmbedBuilder().setDescription("**Fact: **" + kedy.getFact()).setImage(kedy.getImageURL());
-
+            EmbedBuilder randomkedi = new EmbedBuilder()
+                    .setDescription("**Fact: **" + kedy.getFact())
+                    .setImage(kedy.getImageURL());
+            System.out.println(kedy.getImageURL());
             event.replyEmbeds(randomkedi.build()).queue();
-            System.out.println(event.getJDA().getInviteUrl(Permission.ADMINISTRATOR));
+            //System.out.println(event.getJDA().getInviteUrl(Permission.ADMINISTRATOR));
 
         } else if (command.equals("uptime")) {
             RuntimeMXBean rb = ManagementFactory.getRuntimeMXBean();
@@ -154,6 +157,18 @@ public class CommandManager extends ListenerAdapter{
 
         }else if (command.equals("skip")) {
 
+        }else if(command.equals("ask")){
+            String question = (ChatGPT.chatgpt(event.getOptions().get(0).getAsString()));
+            //System.out.println(question);
+            String answer = ChatGPT.answer(question);
+            System.out.println(answer);
+
+            EmbedBuilder embedBuilder = new EmbedBuilder()
+                    .setTitle(event.getMember().getUser().getName())
+                    .addField("Soru",event.getOptions().get(0).getAsString(),false)
+                            .addField("Cevap",answer,false)
+                                    ;
+            event.deferReply().addEmbeds(embedBuilder.build()).queue();
         }
 
     }
@@ -179,6 +194,7 @@ public class CommandManager extends ListenerAdapter{
             commandData.add(Commands.slash("leave", "sg buradan bot"));
             commandData.add(Commands.slash("pause", "Şarkıyı durdurur."));
             commandData.add(Commands.slash("8top", "Anneni sor").addOption(OptionType.STRING, "soru", "Sorunu sor bakem", true));
+            commandData.add(Commands.slash("ask", "ChatGPT ile flörtme şansı").addOption(OptionType.STRING, "soru", "Anneni sor", true));
             commandData.add(Commands.slash("kedy", "Günlük kedy dozunu karşılar"));
             event.getGuild().updateCommands().addCommands(commandData).queue();
 
