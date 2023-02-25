@@ -14,6 +14,7 @@ import java.awt.*;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.net.InetAddress;
+import java.util.concurrent.TimeUnit;
 
 import static java.lang.System.exit;
 
@@ -143,6 +144,18 @@ public class MessageListener extends ListenerAdapter {
            }
 
         }
+        else if(message.substring(0,7).equalsIgnoreCase(prefix+"clear")){
+            System.out.println("CLEAR KOMUDUU!!!");
+            int sayi = Integer.parseInt(message.substring(8));
+            if(sayi <100) {
+                event.getChannel().asTextChannel().getIterableHistory().takeAsync(sayi + 1).thenAccept(event.getChannel()::purgeMessages);
+
+                event.getChannel().sendMessage(sayi + " kadar mesaj silindi!").queue(m -> m.delete().queueAfter(5, TimeUnit.SECONDS));
+            }
+            else
+                event.getChannel().sendMessage("100 den fazla mesaj silemezsin!").queue(m -> m.delete().queueAfter(5, TimeUnit.SECONDS));
+        }
+
     }
 
 
