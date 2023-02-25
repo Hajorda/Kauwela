@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.example.Commands.CommandManager;
+import org.example.Commands.appCommands;
 import org.example.Listeners.GuildListener;
 import org.example.Listeners.GuildMemberListener;
 import org.example.Listeners.MessageListener;
@@ -63,7 +64,7 @@ public class Main {
         timer.start();*/
 
 
-       shardManager.addEventListener(new CommandManager(),new GuildMemberListener(),new GuildListener(),new MessageListener(config));
+       shardManager.addEventListener(new CommandManager(),new GuildMemberListener(),new appCommands(),new GuildListener(),new MessageListener(config));
 
 
 

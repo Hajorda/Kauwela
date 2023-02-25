@@ -22,10 +22,10 @@ public class GuildListener extends ListenerAdapter {
         EmbedBuilder guildJoinEmbed = new EmbedBuilder();
         guildJoinEmbed.setColor(new Color(255,255,0));
         guildJoinEmbed.setThumbnail("https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png");
-        guildJoinEmbed.setFooter("Kauwela Bot");
+        guildJoinEmbed.setFooter("Kauwela Bot","https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png");
         guildJoinEmbed.setAuthor("Merhaba Ben Kauwela Bot!");
         guildJoinEmbed.addField("Beni sunucuya davet ettiğin için teşekkürler.","",false);
-        guildJoinEmbed.addField("Komutlarımı /yardım veya !!yardım yazarak görebilirsin.","",false);
+        guildJoinEmbed.addField("Komutlarımı /help yazarak görebilirsin.","",false);
 
         event.getGuild().getTextChannels().get(0).sendMessageEmbeds(guildJoinEmbed.build()).queue();
 
