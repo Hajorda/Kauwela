@@ -179,8 +179,17 @@ public class CommandManager extends ListenerAdapter{
                 event.replyEmbeds(creditEmbed.build()).addActionRow(Button.link("https://github.com/Hajorda", "Hajorda's GitHub"),
                         Button.link("https://github.com/Cicikuss", "Cicikus's GitHub")).queue();
         }
-        else if (command.equals("userinfo")) {
-            event.reply("Geliştirilme Aşamasında ZAA").queue();
+        else if (command.equals("clear")) {
+
+            System.out.println("CLEAR KOMUDUU!!!");
+            int sayi = event.getOptions().get(0).getAsInt();
+            if(sayi <100) {
+                event.getChannel().asTextChannel().getIterableHistory().takeAsync(sayi + 1).thenAccept(event.getChannel()::purgeMessages);
+
+                event.getChannel().sendMessage(sayi + " kadar mesaj silindi!").queue(m -> m.delete().queueAfter(5, TimeUnit.SECONDS));
+            }
+            else
+                event.reply("100 den fazla mesaj silemezsin!").queue(m -> m.deleteOriginal().queueAfter(5, TimeUnit.SECONDS));
 
         }
         else if (command.equals("serverinfo")) {
@@ -212,20 +221,24 @@ public class CommandManager extends ListenerAdapter{
                     .setThumbnail("https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
                     .setFooter("Kauwela Bot","https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
                     .setDescription("Kauwela Bot is a multipurpose disocrd managment and fun bot. It's writen in Java using JDA and  it's curently developing")
-                    .addField(" \uD83D\uDCC1 Core Commands","" +
-                            "`/help`  For command list \n" +
-                            "`/invite`  Bot's imvite link \n" +
-                            "`/support`  Bot's support server invite link\n" +
-                            "`/credits`  People behind the Bot\n" +
-                            "`/uptime`  How long the bot has been running",false)
-                    .addField("\uD83C\uDFB5 Music Commands","`/play`  Playing music\n" +
-                                    "`/skip`  Skip the music\n" +
-                            "`/pause`  Pausing the music\n" +
-                            "`/leave`  Bot leaves the channel",true)
-                    .addField("Info Commands","`/userinfo`  User's info\n" +
-                            "`/serverinfo` Server's info",true)
-                    .addField("Fun Commands","`/8top` Ask Yes No questions",true)
-                    .addField("","Also When you right click a user from the apps menu you can get the profile image",true);
+                    .addField(" \uD83D\uDCC1 Core Commands", """
+                            `/help`  For command list\s
+                            `/invite`  Bot's imvite link\s
+                            `/support`  Bot's support server invite link
+                            `/credits`  People behind the Bot
+                            `/uptime`  How long the bot has been running""",false)
+                    .addField("\uD83C\uDFB5 Music Commands", """
+                            `/play`  Playing music
+                            `/skip`  Skip the music
+                            `/pause`  Pausing the music
+                            `/leave`  Bot leaves the channel""",true)
+                    .addField("ℹ️ Info Commands","`/userinfo`  User's info\n" +
+                            "`/serverinfo`  Server's info\n" +
+                            "`/clear`  Cleans the chat",true)
+                    .addField("\uD83C\uDF88 Fun Commands","`/8top` Ask Yes No questions\n" +
+                            "`/kedy`  Random cat photos and fun facts",true)
+                    .addField("","Also When you right click a user from menu -> apps, you can get the users profile image`\n" +
+                            "\uD83E\uDD16 Ayrıca botu etiketleyip bot ile GPT3 kullanarak sohbet edebilirsin.",true);
 
 
 
@@ -266,7 +279,7 @@ public class CommandManager extends ListenerAdapter{
             commandData.add(Commands.slash("pause", "Şarkıyı durdurur."));
             commandData.add(Commands.slash("credits", "Kredi skorunu gösterir"));
             commandData.add(Commands.slash("8top", "Anneni sor").addOption(OptionType.STRING, "soru", "Sorunu sor bakem", true));
-            commandData.add(Commands.slash("userinfo", "Kullanıcının bilgilerine bak").addOption(OptionType.STRING, "kullanıcı", "Kullanıcın bilgilerini gösterir", true));
+            commandData.add(Commands.slash("clear", "Sohbet kaydını temizler").addOption(OptionType.INTEGER, "mesajsayisi", "Temizleyeceğin mesaj sayisini gir", true));
             commandData.add(Commands.slash("serverinfo", "Sunucunun bilgilerine bak"));
             commandData.add(Commands.slash("invite", "İnviting for Kauwela Bot"));
             commandData.add(Commands.slash("support", "Kauwela Bot support server"));

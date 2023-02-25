@@ -56,7 +56,7 @@ public class MessageListener extends ListenerAdapter {
 
 
 
-        if (message.equals(prefix+"ping")){
+        if (message.equals(prefix+"status")){
             event.getMessage().addReaction(Emoji.fromUnicode("U+2705")).queue();
             EmbedBuilder eb = new EmbedBuilder();
 
@@ -151,17 +151,7 @@ public class MessageListener extends ListenerAdapter {
            }
 
         }
-        else if(message.substring(0,7).equalsIgnoreCase(prefix+"clear")){
-            System.out.println("CLEAR KOMUDUU!!!");
-            int sayi = Integer.parseInt(message.substring(8));
-            if(sayi <100) {
-                event.getChannel().asTextChannel().getIterableHistory().takeAsync(sayi + 1).thenAccept(event.getChannel()::purgeMessages);
-
-                event.getChannel().sendMessage(sayi + " kadar mesaj silindi!").queue(m -> m.delete().queueAfter(5, TimeUnit.SECONDS));
-            }
-            else
-                event.getChannel().sendMessage("100 den fazla mesaj silemezsin!").queue(m -> m.delete().queueAfter(5, TimeUnit.SECONDS));
-        }else if (event.getMessage().getMentions().getUsers().size()> 0){
+        else if (event.getMessage().getMentions().getUsers().size()> 0){
             if (event.getMessage().getMentions().getUsers().get(0).getId().equals("984469828008026192")){
 
                 String prompt = message.replace("<@984469828008026192>","");
@@ -172,6 +162,7 @@ public class MessageListener extends ListenerAdapter {
             }
         }
         else if(message.indexOf(prefix+"randomgpt") !=-1){
+            event.getMessage().addReaction(Emoji.fromUnicode("U+2705")).queue();
             System.out.println("Çalıştı");
             String prompt = message.replace(prefix+"randomgpt","");
             event.getChannel().sendTyping().queue();
@@ -183,6 +174,7 @@ public class MessageListener extends ListenerAdapter {
            }
 
         }else if(message.indexOf(prefix+"rimage") !=-1){
+            event.getMessage().addReaction(Emoji.fromUnicode("U+2705")).queue();
             System.out.println("Çalıştı");
             String prompt = message.replace(prefix+"rimage","");
             event.getChannel().sendTyping().queue();
