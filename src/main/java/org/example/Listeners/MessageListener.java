@@ -4,9 +4,11 @@ import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
+import net.dv8tion.jda.api.events.message.MessageBulkDeleteEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -14,6 +16,9 @@ import java.awt.*;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.net.InetAddress;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static java.lang.System.exit;
 
@@ -51,7 +56,7 @@ public class MessageListener extends ListenerAdapter {
 
 
 
-        if (message.equals(prefix+"ping")){
+        if (message.equals(prefix+"status")){
             event.getMessage().addReaction(Emoji.fromUnicode("U+2705")).queue();
             EmbedBuilder eb = new EmbedBuilder();
 
@@ -143,6 +148,24 @@ public class MessageListener extends ListenerAdapter {
            }
 
         }
+
+        else if(message.substring(0,7).equalsIgnoreCase(prefix+"clear")){
+            System.out.println("CLEAR KOMUDUU!!!");
+            int sayi = Integer.parseInt(message.substring(8));
+            if(sayi <100) {
+                event.getChannel().asTextChannel().getIterableHistory().takeAsync(sayi + 1).thenAccept(event.getChannel()::purgeMessages);
+
+                event.getChannel().sendMessage(sayi + " kadar mesaj silindi!").queue(m -> m.delete().queueAfter(5, TimeUnit.SECONDS));
+            }
+            else
+                event.getChannel().sendMessage("100 den fazla mesaj silemezsin!").queue(m -> m.delete().queueAfter(5, TimeUnit.SECONDS));
+        }
+       /* else if(message.substring(0,2).equalsIgnoreCase(prefix+"")){
+            event.getChannel().sendMessage("Böyle bir komut bulunamadı. !!help kullan.").queue();
+
+        }*/
+
+
     }
 
 
