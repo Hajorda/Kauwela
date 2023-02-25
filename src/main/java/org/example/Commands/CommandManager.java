@@ -266,7 +266,7 @@ public class CommandManager extends ListenerAdapter{
             commandData.add(Commands.slash("pause", "Şarkıyı durdurur."));
             commandData.add(Commands.slash("credits", "Kredi skorunu gösterir"));
             commandData.add(Commands.slash("8top", "Anneni sor").addOption(OptionType.STRING, "soru", "Sorunu sor bakem", true));
-            commandData.add(Commands.slash("userinfo", "Kullanıcının bilgilerine bak").addOption(OptionType.STRING, "Kullanıcı", "Kullanıcın bilgilerini gösterir", true));
+            commandData.add(Commands.slash("userinfo", "Kullanıcının bilgilerine bak").addOption(OptionType.STRING, "kullanıcı", "Kullanıcın bilgilerini gösterir", true));
             commandData.add(Commands.slash("serverinfo", "Sunucunun bilgilerine bak"));
             commandData.add(Commands.slash("invite", "İnviting for Kauwela Bot"));
             commandData.add(Commands.slash("support", "Kauwela Bot support server"));

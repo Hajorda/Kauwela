@@ -9,8 +9,12 @@ import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.utils.FileUpload;
+import org.example.ChatGPT.ChatGPT;
+import org.example.ChatGPT.DallE;
 
 import java.awt.*;
+import java.io.File;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.net.InetAddress;
@@ -137,6 +141,9 @@ public class MessageListener extends ListenerAdapter {
                }
 
                event.getJDA().shutdown();
+
+
+
                System.exit(0);
            }
            else {
@@ -154,6 +161,38 @@ public class MessageListener extends ListenerAdapter {
             }
             else
                 event.getChannel().sendMessage("100 den fazla mesaj silemezsin!").queue(m -> m.delete().queueAfter(5, TimeUnit.SECONDS));
+        }else if (event.getMessage().getMentions().getUsers().size()> 0){
+            if (event.getMessage().getMentions().getUsers().get(0).getId().equals("984469828008026192")){
+
+                String prompt = message.replace("<@984469828008026192>","");
+                event.getChannel().sendTyping();
+                String answer =  ChatGPT.chatgpt(prompt);
+
+                event.getChannel().sendMessage(answer).queue();
+            }
+        }
+        else if(message.indexOf(prefix+"randomgpt") !=-1){
+            System.out.println("Çalıştı");
+            String prompt = message.replace(prefix+"randomgpt","");
+            event.getChannel().sendTyping().queue();
+           try {
+               String response = ChatGPT.chatgptRandom(prompt);
+               event.getChannel().sendMessage(response.substring(0,response.lastIndexOf("index")-3)) .queue();
+           }catch (Exception e){
+               event.getChannel().sendMessage("API de sıkıntı çıktı").queue();
+           }
+
+        }else if(message.indexOf(prefix+"rimage") !=-1){
+            System.out.println("Çalıştı");
+            String prompt = message.replace(prefix+"rimage","");
+            event.getChannel().sendTyping().queue();
+            try {
+             String url = DallE.ImageCreaterRandomizer(prompt);
+             event.getChannel().sendMessageEmbeds(new EmbedBuilder().setImage(url).build()).queue();
+            }catch (Exception e){
+                event.getChannel().sendMessage("API de sıkıntı çıktı").queue();
+            }
+
         }
 
     }
