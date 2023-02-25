@@ -12,19 +12,25 @@ public class ChatGPT {
     public static String chatgpt(String text) {
         AtomicReference<String> answer = new AtomicReference<>("");
         OpenAiService service = new OpenAiService(Dotenv.load().get("APIKEY"), Duration.ofMillis(1000000000));
-
+        String birText = "AI: My name is Kauwela Bot and I am a discord bot.\n" +
+                "Human: Help\n" +
+                "AI: You can get help with writing !help command to chat\nHuman:"+text;
         CompletionRequest completionRequest = CompletionRequest.builder()
-                .prompt(text)
+                .prompt(birText)
                 .model("text-davinci-003")
-                .echo(true)
-                .maxTokens(4000)
 
+                .maxTokens(150)
+                .temperature(0.9)
+                .topP(1.0)
+                .frequencyPenalty(0.0)
+                .presencePenalty(0.6)
                 .build();
 
         service.createCompletion(completionRequest).getChoices().forEach(name -> {
             answer.updateAndGet(v -> v + name);
         });
-        return answer.get().trim();
+        System.out.println(answer.get());
+        return answer.get().substring(answer.get().indexOf("\n")).trim();
 
 
     }
@@ -35,8 +41,7 @@ public class ChatGPT {
         if (text.length() > 60) {
             if (text.contains("\n")){
                 System.out.println("1");
-                return text.substring(text.indexOf("\n"), text.indexOf("index") - 2);
-
+                return  text.substring(text.indexOf("0"), text.indexOf("index") - 3);
             }
             else {
                 int tempCountedChar = 0;
@@ -56,7 +61,7 @@ public class ChatGPT {
 
         } else {
             System.out.println(3);
-            return text.substring(text.indexOf("\n"), text.indexOf("index") - 2);
+            return text.substring(text.indexOf("0"), text.indexOf("index") - 3);
 
         }
     }
