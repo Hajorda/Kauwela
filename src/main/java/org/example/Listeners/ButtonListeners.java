@@ -15,6 +15,7 @@ public class ButtonListeners extends ListenerAdapter{
                     .setImage(MessageListener.url)
                     .setFooter(event.getUser().getName(), event.getUser().getAvatarUrl());
             event.getGuild().getTextChannelById("1079329718446342244").sendMessageEmbeds(saveGPT.build()).queue();
+            event.reply("Resim Kaydedildi.").queue();
         }
     }
 /*public void onSlashCommand(SlashCommandEvent event) {
