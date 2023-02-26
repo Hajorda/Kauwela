@@ -238,7 +238,8 @@ public class CommandManager extends ListenerAdapter{
                             `/leave`  Bot leaves the channel""",true)
                     .addField("ℹ️ Info Commands","`/userinfo`  User's info\n" +
                             "`/serverinfo`  Server's info\n" +
-                            "`/clear`  Cleans the chat",true)
+                            "`/clear`  Cleans the chat\n" +
+                            "`/feedback`  Any feedback for Bot",true)
                     .addField("\uD83C\uDF88 Fun Commands","`/8top` Ask Yes No questions\n" +
                             "`/kedy`  Random cat photos and fun facts",true)
                     .addField("","Also When you right click a user from menu -> apps, you can get the users profile image`\n" +
