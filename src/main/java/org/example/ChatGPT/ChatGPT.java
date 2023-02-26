@@ -39,8 +39,8 @@ public class ChatGPT {
     public static String chatgpt(String text) {
         AtomicReference<String> answer = new AtomicReference<>("");
         OpenAiService service = new OpenAiService(Dotenv.load().get("APIKEY"), Duration.ofMillis(1000000000));
-        String birText = "AI: My name is Kauwela Bot and I am a discord bot.\n" +
-                "Human: Help\n" +
+        String birText = "AI: My name is Kauwela Bot and I am a discord bot. I can speak both Turkish and English.\n" +
+                "Human: Help me\n" +
                 "AI: You can get help with writing !help command to chat\nHuman:"+text;
         CompletionRequest completionRequest = CompletionRequest.builder()
                 .prompt(birText)
