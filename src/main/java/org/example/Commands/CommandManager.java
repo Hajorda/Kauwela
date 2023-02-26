@@ -30,6 +30,8 @@ import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
 import net.dv8tion.jda.api.interactions.modals.Modal;
 import net.dv8tion.jda.api.managers.AudioManager;
 import org.example.ChatGPT.ChatGPT;
+import org.example.ChatGPT.DallE;
+import org.example.Listeners.MessageListener;
 import org.example.MusicPlayer.GuildMusicManager;
 import org.example.MusicPlayer.PlayerManager;
 import org.example.MusicPlayer.TrackScheduler;
@@ -51,6 +53,7 @@ public class CommandManager extends ListenerAdapter{
     private Dotenv env;
     private String botID;
     public static TextChannel textChannel;
+    String url;
 
     public CommandManager() {
         env= Dotenv.configure().load();
@@ -231,19 +234,24 @@ public class CommandManager extends ListenerAdapter{
                             `/invite`  Bot's imvite link\s
                             `/support`  Bot's support server invite link
                             `/credits`  People behind the Bot
-                            `/uptime`  How long the bot has been running""",false)
+                            `/uptime`  How long the bot has been running
+                            `/status`  Stats of Bot""",false)
                     .addField("\uD83C\uDFB5 Music Commands", """
                             `/play`  Playing music
                             `/skip`  Skip the music
                             `/pause`  Pausing the music
                             `/leave`  Bot leaves the channel""",true)
-                    .addField("ℹ️ Info Commands","`/userinfo`  User's info\n" +
-                            "`/serverinfo`  Server's info\n" +
-                            "`/clear`  Cleans the chat\n" +
-                            "`/feedback`  Any feedback for Bot",true)
-                    .addField("\uD83C\uDF88 Fun Commands","`/8top` Ask Yes No questions\n" +
-                            "`/kedy`  Random cat photos and fun facts\n" +
-                            "`/soundboard`  Generates the soundboard",true)
+                    .addField("ℹ️ Info Commands", """
+                            `/userinfo`  User's info
+                            `/serverinfo`  Server's info
+                            `/clear`  Cleans the chat
+                            `/feedback`  Any feedback for Bot""",true)
+                    .addField("\uD83C\uDF88 Fun Commands", """
+                            `/8top` Ask Yes No questions
+                            `/kedy`  Random cat photos and fun facts
+                            `/soundboard`  Generates the soundboard
+                            `/randomgpt`  Chat with GPT3 but random settings
+                            `/rimage`  Generates images with Dale2""",true)
                     .addField("","Also When you right click a user from menu -> apps, you can get the users profile image`\n" +
                             "\uD83E\uDD16 Ayrıca botu etiketleyip bot ile GPT3 kullanarak sohbet edebilirsin.",true);
 
@@ -292,6 +300,49 @@ public class CommandManager extends ListenerAdapter{
                 message.addReaction(Emoji.fromUnicode("U+1F910")).queue();
                 message.addReaction(Emoji.fromUnicode("U+1F922")).queue();
             });
+        } else if(command.equals("randomgpt")) {
+            System.out.println("Çalıştı");
+            String prompt = event.getOptions().get(0).getAsString();
+            event.deferReply().queue();
+            try {
+                String response = ChatGPT.chatgptRandom(prompt);
+
+                event.getHook().sendMessage(response.substring(0,response.lastIndexOf("index")-3)) .queue();
+            }catch (Exception e){
+                event.getHook().sendMessage("API de sıkıntı çıktı").queue();
+            }
+        } else if (command.equals("status")) {
+            EmbedBuilder eb = new EmbedBuilder();
+
+            eb.setTitle("KauwelaBot'un Durumu", null);
+            eb.setColor(new Color(0x59E010));
+            eb.setThumbnail("https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png");
+
+            eb.setDescription("");
+            eb.addField("Ping",""+event.getJDA().getGatewayPing()+"ms",true);
+            eb.addField("Kullanıcı Sayısı",""+MessageListener.totalMember(event),true);
+            eb.addField("Sunucu Sayısı",""+MessageListener.totalServer(event),true);
+
+            eb.addField("Bot Durumu","Aktif",true);
+            eb.addField("Sunucu Shard",""+event.getJDA().getShardInfo().getShardString(),true);
+
+
+            eb.setFooter("KauwelaBot",event.getJDA().getSelfUser().getAvatarUrl());
+
+            //event.getChannel().sendMessageFormat(eb.build()).queue();
+            event.replyEmbeds(eb.build()).queue();
+        } else if (command.equals("rimage")) {
+
+            String prompt = event.getOptions().get(0).getAsString();
+            event.deferReply().queue();
+            try {
+                url = DallE.ImageCreaterRandomizer(prompt);
+
+                event.getHook().sendMessageEmbeds(new EmbedBuilder().setImage(url).setFooter(event.getUser().getName(),event.getUser().getAvatarUrl()).setAuthor(prompt).setColor(Color.magenta).build()).addActionRow(Button.primary("rimage_save","Save")).queue();
+            }catch (Exception e){
+                event.getHook().sendMessage("API de sıkıntı çıktı").queue();
+            }
+
         }
         /*else if(command.equals("ask")){
             String question = (ChatGPT.chatgpt(event.getOptions().get(0).getAsString()));
@@ -327,6 +378,8 @@ public class CommandManager extends ListenerAdapter{
             commandData.add(Commands.slash("pause", "Şarkıyı durdurur."));
             commandData.add(Commands.slash("credits", "Kredi skorunu gösterir"));
             commandData.add(Commands.slash("8top", "Anneni sor").addOption(OptionType.STRING, "soru", "Sorunu sor bakem", true));
+            commandData.add(Commands.slash("randomgpt", "Anneni sor").addOption(OptionType.STRING, "soru", "Sorunu sor bakem", true));
+            commandData.add(Commands.slash("rimage", "Resim yap enayi").addOption(OptionType.STRING, "metin", "Nasıl bir şey olsun bacım", true));
             commandData.add(Commands.slash("clear", "Sohbet kaydını temizler").addOption(OptionType.INTEGER, "mesajsayisi", "Temizleyeceğin mesaj sayisini gir", true));
             commandData.add(Commands.slash("serverinfo", "Sunucunun bilgilerine bak"));
             commandData.add(Commands.slash("invite", "İnviting for Kauwela Bot"));
@@ -334,6 +387,7 @@ public class CommandManager extends ListenerAdapter{
             commandData.add(Commands.slash("soundboard", "SoundBoard"));
             commandData.add(Commands.slash("help", "Command list"));
             commandData.add(Commands.slash("feedback", "Feedback"));
+            commandData.add(Commands.slash("status", "Status of Bot"));
             commandData.add(Commands.context(Command.Type.USER, "Get user avatar"));
             commandData.add(Commands.message("Count words"));
            // commandData.add(Commands.slash("ask", "ChatGPT2  ile flörtme şansı").addOption(OptionType.STRING, "soru", "Anneni sor", true));

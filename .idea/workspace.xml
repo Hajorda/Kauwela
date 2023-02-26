@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ee6ee57-111b-4285-a23e-f17abe0fb43a" name="Changes" comment="feedback last fix ++">
+    <list default="true" id="5ee6ee57-111b-4285-a23e-f17abe0fb43a" name="Changes" comment="Yarım sooundboard">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Commands/CommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/CommandManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Commands/appCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/appCommands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Listeners/MessageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Listeners/MessageListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,7 +208,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677435925824</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Yarım sooundboard">
+      <created>1677440551254</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1677440551254</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -241,6 +248,7 @@
     <MESSAGE value="Command feedback" />
     <MESSAGE value="feedback last fix" />
     <MESSAGE value="feedback last fix ++" />
-    <option name="LAST_COMMIT_MESSAGE" value="feedback last fix ++" />
+    <MESSAGE value="Yarım sooundboard" />
+    <option name="LAST_COMMIT_MESSAGE" value="Yarım sooundboard" />
   </component>
 </project>

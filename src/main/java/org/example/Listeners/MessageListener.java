@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
@@ -32,7 +33,15 @@ public class MessageListener extends ListenerAdapter {
         prefix = dot.get("PREFIX");
     }
 
-    private int totalMember(MessageReceivedEvent event){
+    public static int totalMember(MessageReceivedEvent event){
+        int sum = 0;
+
+        for (Guild g : event.getJDA().getGuilds()){
+            sum += g.getMemberCount();
+        }
+        return sum;
+    }
+    public static int totalMember(SlashCommandInteractionEvent event){
         int sum = 0;
 
         for (Guild g : event.getJDA().getGuilds()){
@@ -41,7 +50,7 @@ public class MessageListener extends ListenerAdapter {
         return sum;
     }
 
-    private int totalServer(MessageReceivedEvent event){
+    public static int totalServer(MessageReceivedEvent event){
         int sum = 0;
 
         for (Guild g : event.getJDA().getGuilds()){
@@ -49,6 +58,15 @@ public class MessageListener extends ListenerAdapter {
         }
         return sum;
     }
+    public static int totalServer(SlashCommandInteractionEvent event){
+        int sum = 0;
+
+        for (Guild g : event.getJDA().getGuilds()){
+            sum += 1;
+        }
+        return sum;
+    }
+
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
