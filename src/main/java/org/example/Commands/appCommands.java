@@ -46,9 +46,10 @@ public class appCommands extends ListenerAdapter {
             EmbedBuilder feedbackEmbed = new EmbedBuilder()
                     .addField("Subject", subject, false)
                     .addField("Description", body, false)
-                    .setAuthor("Feedback","https://cdn.discordapp.com/avatars/984469828008026192/50f4e125b07d64833a21925b26d22cb6.png")
+                    .setAuthor("Feedback")
                     .setFooter(user, userPp)
-                    .setColor(Color.green);
+                    .setColor(Color.green)
+                    .setThumbnail("https://cdn.discordapp.com/avatars/984469828008026192/50f4e125b07d64833a21925b26d22cb6.png");
 
             event.reply("Thanks for your feedback!").setEphemeral(true).queue();
             event.getJDA().getGuildById("984469721455919174").getTextChannelById("1079155021876297758").sendMessageEmbeds(feedbackEmbed.build()).queue();
