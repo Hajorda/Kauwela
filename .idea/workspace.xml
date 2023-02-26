@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ee6ee57-111b-4285-a23e-f17abe0fb43a" name="Changes" comment="feedback fix">
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Commands/CommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/CommandManager.java" afterDir="false" />
+    <list default="true" id="5ee6ee57-111b-4285-a23e-f17abe0fb43a" name="Changes" comment="Command feedback">
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Commands/appCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/appCommands.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,7 +185,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677435606999</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Command feedback">
+      <created>1677435700825</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1677435700825</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -215,6 +222,7 @@
     <MESSAGE value="Deneme commit" />
     <MESSAGE value="Feedback sistemi + hihihaha kapama sistemi" />
     <MESSAGE value="feedback fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="feedback fix" />
+    <MESSAGE value="Command feedback" />
+    <option name="LAST_COMMIT_MESSAGE" value="Command feedback" />
   </component>
 </project>
