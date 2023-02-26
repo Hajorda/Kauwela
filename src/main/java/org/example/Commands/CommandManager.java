@@ -36,6 +36,7 @@ import org.example.MusicPlayer.GuildMusicManager;
 import org.example.MusicPlayer.PlayerManager;
 import org.example.MusicPlayer.TrackScheduler;
 import org.example.RandomCat.RandomCat;
+import org.example.RandomWaifu.RandomWaifu;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
@@ -343,6 +344,19 @@ public class CommandManager extends ListenerAdapter{
                 event.getHook().sendMessage("API de sıkıntı çıktı").queue();
             }
 
+        }else if(command.equals("waifu")){
+            event.replyEmbeds(new EmbedBuilder().setImage(new RandomWaifu("sfw","waifu").getImageUrl()).build()).queue();
+        }
+        else if(command.equals("hug")){
+                if(event.getOptions().size() !=0){
+                    event.reply(event.getUser().getAsMention()+" "+event.getOptions().get(0).getAsUser().getAsMention()+" kişisine sarılıyor").queue();
+                    event.getChannel().sendMessageEmbeds(new EmbedBuilder()
+                            .setImage(new RandomWaifu("sfw","hug").getImageUrl())
+                            .build()).queue();
+                }
+                else {
+                    event.replyEmbeds(new EmbedBuilder().setImage(new RandomWaifu("sfw","hug").getImageUrl()).build()).queue();
+                }
         }
         /*else if(command.equals("ask")){
             String question = (ChatGPT.chatgpt(event.getOptions().get(0).getAsString()));
@@ -388,6 +402,8 @@ public class CommandManager extends ListenerAdapter{
             commandData.add(Commands.slash("help", "Command list"));
             commandData.add(Commands.slash("feedback", "Feedback"));
             commandData.add(Commands.slash("status", "Status of Bot"));
+            commandData.add(Commands.slash("hug", "Keşke bana da birileri sarılsa").addOption(OptionType.MENTIONABLE,"hedef","Ona sıkıca sarılın",false));
+            commandData.add(Commands.slash("waifu", "Keşke anime kızları gerçek olsa"));
             commandData.add(Commands.context(Command.Type.USER, "Get user avatar"));
             commandData.add(Commands.message("Count words"));
            // commandData.add(Commands.slash("ask", "ChatGPT2  ile flörtme şansı").addOption(OptionType.STRING, "soru", "Anneni sor", true));

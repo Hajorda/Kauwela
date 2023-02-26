@@ -15,7 +15,9 @@ public class DallE {
                 .n(new Random().nextInt(10)+1)
                 .size("1024x1024")
                 .build();
+
         return openAiService.createImage(createImageRequest).getData().get(0).getUrl();
+
 
     }
 }

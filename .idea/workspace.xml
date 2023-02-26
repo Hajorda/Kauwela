@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ee6ee57-111b-4285-a23e-f17abe0fb43a" name="Changes" comment="FİX">
+    <list default="true" id="5ee6ee57-111b-4285-a23e-f17abe0fb43a" name="Changes" comment="Dall E eklendi">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Commands/CommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/CommandManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Listeners/ButtonListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Listeners/ButtonListeners.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -229,14 +227,7 @@
       <option name="project" value="LOCAL" />
       <updated>1677443007134</updated>
     </task>
-    <task id="LOCAL-00023" summary="FİX">
-      <created>1677445932617</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1677445932617</updated>
-    </task>
-    <option name="localTasksCounter" value="24" />
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -272,7 +263,6 @@
     <MESSAGE value="Yarım sooundboard" />
     <MESSAGE value="GPT komutları slash komudu yapıldı" />
     <MESSAGE value="GPT fix" />
-    <MESSAGE value="FİX" />
-    <option name="LAST_COMMIT_MESSAGE" value="FİX" />
+    <option name="LAST_COMMIT_MESSAGE" value="GPT fix" />
   </component>
 </project>
