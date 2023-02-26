@@ -5,6 +5,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import com.sedmelluq.discord.lavaplayer.track.info.AudioTrackInfoBuilder;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.emoji.CustomEmoji;
 import net.dv8tion.jda.api.events.interaction.command.MessageContextInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.UserContextInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
@@ -151,7 +152,7 @@ public class CommandManager extends ListenerAdapter{
             }
             else {
 
-                GuildMusicManager musicManager =PlayerManager.getInstance().getMusicManager(event.getGuild());
+                GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(event.getGuild());
                 AudioManager audioManager = event.getGuild().getAudioManager();
                 musicManager.scheduler.player.stopTrack();
                 musicManager.scheduler.queue.clear();
@@ -241,13 +242,15 @@ public class CommandManager extends ListenerAdapter{
                             "`/clear`  Cleans the chat\n" +
                             "`/feedback`  Any feedback for Bot",true)
                     .addField("\uD83C\uDF88 Fun Commands","`/8top` Ask Yes No questions\n" +
-                            "`/kedy`  Random cat photos and fun facts",true)
+                            "`/kedy`  Random cat photos and fun facts\n" +
+                            "`/soundboard`  Generates the soundboard",true)
                     .addField("","Also When you right click a user from menu -> apps, you can get the users profile image`\n" +
                             "\uD83E\uDD16 Ayrıca botu etiketleyip bot ile GPT3 kullanarak sohbet edebilirsin.",true);
 
 
 
-            event.replyEmbeds(embedHelp.build()).queue();
+            event.replyEmbeds(embedHelp.build()).addActionRow(Button.link("https://ptb.discord.com/api/oauth2/authorize?client_id=984469828008026192&permissions=8&scope=bot%20applications.commands","Invite"),
+                    Button.link("https://discord.gg/jXpT9rtHMN", "Support Server")).queue();
 
         } else if (command.equals("feedback")) {
             if (event.getName().equals("feedback")) {
@@ -270,6 +273,25 @@ public class CommandManager extends ListenerAdapter{
                 event.replyModal(modal).queue();
             }
 
+            }
+        else if (command.equals("soundboard")) {
+
+            EmbedBuilder soundEmbed = new EmbedBuilder()
+                    .setAuthor("SoundBoard")
+                    .setDescription("Emojilere tıkla bacım")
+                    .setColor(Color.YELLOW)
+                    .setThumbnail("https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
+                    .setFooter("Kauwela Bot","https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
+                    .addField("Sounds","`HihihiHa` \uD83E\uDD2A",true);
+
+
+            event.reply("Soundboard Aktif").queue();
+           appCommands.TextChannel = event.getChannel().asTextChannel().getId();
+            event.getChannel().sendMessageEmbeds(soundEmbed.build()).queue(message -> {
+                message.addReaction(Emoji.fromUnicode("U+1F601")).queue();
+                message.addReaction(Emoji.fromUnicode("U+1F910")).queue();
+                message.addReaction(Emoji.fromUnicode("U+1F922")).queue();
+            });
         }
         /*else if(command.equals("ask")){
             String question = (ChatGPT.chatgpt(event.getOptions().get(0).getAsString()));
@@ -309,6 +331,7 @@ public class CommandManager extends ListenerAdapter{
             commandData.add(Commands.slash("serverinfo", "Sunucunun bilgilerine bak"));
             commandData.add(Commands.slash("invite", "İnviting for Kauwela Bot"));
             commandData.add(Commands.slash("support", "Kauwela Bot support server"));
+            commandData.add(Commands.slash("soundboard", "SoundBoard"));
             commandData.add(Commands.slash("help", "Command list"));
             commandData.add(Commands.slash("feedback", "Feedback"));
             commandData.add(Commands.context(Command.Type.USER, "Get user avatar"));

@@ -2,21 +2,28 @@ package org.example.Commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.MessageContextInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.UserContextInteractionEvent;
+import net.dv8tion.jda.api.events.message.react.GenericMessageReactionEvent;
+import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
 import net.dv8tion.jda.api.interactions.components.text.TextInput;
 import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
 import net.dv8tion.jda.api.interactions.modals.Modal;
+import net.dv8tion.jda.api.managers.AudioManager;
 import okhttp3.internal.http2.Http2Connection;
+import org.example.MusicPlayer.PlayerManager;
 
 import java.awt.*;
 
 
 public class appCommands extends ListenerAdapter {
+    public static String TextChannel;
     @Override
     public void onUserContextInteraction(UserContextInteractionEvent event) {
         System.out.println("deneme1");
@@ -56,5 +63,28 @@ public class appCommands extends ListenerAdapter {
         }
     }
 
+    @Override
+    public void onMessageReactionAdd(MessageReactionAddEvent event) {
 
+    }
+
+
+    @Override
+    public void onGenericMessageReaction(GenericMessageReactionEvent event) {
+      if(!(event.getUserId().equals("984469828008026192")) && event.getChannel().asTextChannel().getId().equals(TextChannel))
+
+          if(event.getEmoji().equals(Emoji.fromUnicode("U+1F601"))){
+        event.getChannel().sendMessage("Emoji1").queue();
+              AudioManager audioManager = event.getGuild().getAudioManager();
+              VoiceChannel memberchannel = event.getMember().getVoiceState().getChannel().asVoiceChannel();
+              audioManager.openAudioConnection(memberchannel);
+              PlayerManager.getInstance().loadAndPlayNonEmbed(event.getGuild().getTextChannels().get(0), "https://www.youtube.com/watch?v=2kwA5T7AjXY");
+       }
+        else if(event.getEmoji().equals(Emoji.fromUnicode("U+1F910"))){
+            event.getChannel().sendMessage("Emoji2").queue();
+        }
+        else if(event.getEmoji().equals(Emoji.fromUnicode("U+1F922"))){
+            event.getChannel().sendMessage("Emoji3").queue();
+        }
+    }
 }
