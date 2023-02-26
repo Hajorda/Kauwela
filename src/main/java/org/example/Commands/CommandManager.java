@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.events.interaction.command.MessageContextInteractionE
 import net.dv8tion.jda.api.events.interaction.command.UserContextInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.interactions.commands.Command;
+import net.dv8tion.jda.api.interactions.components.ActionRow;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
@@ -23,6 +24,9 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.components.ItemComponent;
+import net.dv8tion.jda.api.interactions.components.text.TextInput;
+import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
+import net.dv8tion.jda.api.interactions.modals.Modal;
 import net.dv8tion.jda.api.managers.AudioManager;
 import org.example.ChatGPT.ChatGPT;
 import org.example.MusicPlayer.GuildMusicManager;
@@ -244,6 +248,27 @@ public class CommandManager extends ListenerAdapter{
 
             event.replyEmbeds(embedHelp.build()).queue();
 
+        } else if (command.equals("feedback")) {
+            if (event.getName().equals("feedback")) {
+                TextInput subject = TextInput.create("subject", "Subject", TextInputStyle.SHORT)
+                        .setPlaceholder("Subject of this feedback")
+                        .setMinLength(10)
+                        .setMaxLength(100) // or setRequiredRange(10, 100)
+                        .build();
+
+                TextInput body = TextInput.create("body", "Body", TextInputStyle.PARAGRAPH)
+                        .setPlaceholder("Your feedback goes here")
+                        .setMinLength(30)
+                        .setMaxLength(1000)
+                        .build();
+
+                Modal modal = Modal.create("feedback", "Feedback")
+                        .addActionRows(ActionRow.of(subject), ActionRow.of(body))
+                        .build();
+
+                event.replyModal(modal).queue();
+            }
+
         }
         /*else if(command.equals("ask")){
             String question = (ChatGPT.chatgpt(event.getOptions().get(0).getAsString()));
@@ -284,6 +309,7 @@ public class CommandManager extends ListenerAdapter{
             commandData.add(Commands.slash("invite", "İnviting for Kauwela Bot"));
             commandData.add(Commands.slash("support", "Kauwela Bot support server"));
             commandData.add(Commands.slash("help", "Command list"));
+            commandData.add(Commands.slash("feedback", "Feedback"));
             commandData.add(Commands.context(Command.Type.USER, "Get user avatar"));
             commandData.add(Commands.message("Count words"));
            // commandData.add(Commands.slash("ask", "ChatGPT2  ile flörtme şansı").addOption(OptionType.STRING, "soru", "Anneni sor", true));

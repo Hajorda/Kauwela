@@ -1,11 +1,23 @@
 package org.example.Listeners;
 
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.awt.*;
 
-public class ButtonListeners extends ListenerAdapter {
-    /*public void onSlashCommand(SlashCommandEvent event) {
+public class ButtonListeners extends ListenerAdapter{
+    @Override
+    public void onButtonInteraction(ButtonInteractionEvent event) {
+        if (event.getComponentId().equals("rimage_save")) {
+            EmbedBuilder saveGPT = new EmbedBuilder()
+                    .setColor(Color.orange)
+                    .setImage(MessageListener.url)
+                    .setFooter(event.getUser().getName(), event.getUser().getAvatarUrl());
+            event.getGuild().getTextChannelById("1079329718446342244").sendMessageEmbeds(saveGPT.build()).queue();
+        }
+    }
+/*public void onSlashCommand(SlashCommandEvent event) {
         if (event.getName().equals("hello")) {
             event.reply("Click the button to say hello")
                     .addActionRow(

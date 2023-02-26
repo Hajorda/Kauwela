@@ -18,7 +18,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class GuildMemberListener extends ListenerAdapter {
-
+public static boolean hihihaha = true;
     @Override
     public void onGuildMemberJoin(GuildMemberJoinEvent event) {
 
@@ -70,25 +70,26 @@ public class GuildMemberListener extends ListenerAdapter {
            }
 
        }
-        if (event.getChannelJoined() !=null) {
-            if (!(event.getMember().getUser().getId().equals("984469828008026192"))) {
+       if(hihihaha == true) {
+           if (event.getChannelJoined() != null) {
+               if (!(event.getMember().getUser().getId().equals("984469828008026192"))) {
 
-                AudioManager audioManager = event.getGuild().getAudioManager();
-                VoiceChannel memberchanne = event.getMember().getVoiceState().getChannel().asVoiceChannel();
-                audioManager.openAudioConnection(memberchanne);
-                PlayerManager.getInstance().loadAndPlayNonEmbed(event.getGuild().getTextChannels().get(0), "https://www.youtube.com/watch?v=2kwA5T7AjXY");
+                   AudioManager audioManager = event.getGuild().getAudioManager();
+                   VoiceChannel memberchanne = event.getMember().getVoiceState().getChannel().asVoiceChannel();
+                   audioManager.openAudioConnection(memberchanne);
+                   PlayerManager.getInstance().loadAndPlayNonEmbed(event.getGuild().getTextChannels().get(0), "https://www.youtube.com/watch?v=2kwA5T7AjXY");
 
-                Timer timer = new Timer();
-                TimerTask task = new TimerTask() {
-                    @Override
-                    public void run() {
-                        audioManager.closeAudioConnection();
-                    }
-                };
-                timer.schedule(task, PlayerManager.getInstance().getDuration() + 2000);
-            }
-        }
-
+                   Timer timer = new Timer();
+                   TimerTask task = new TimerTask() {
+                       @Override
+                       public void run() {
+                           audioManager.closeAudioConnection();
+                       }
+                   };
+                   timer.schedule(task, PlayerManager.getInstance().getDuration() + 2000);
+               }
+           }
+       }
     }
 
 

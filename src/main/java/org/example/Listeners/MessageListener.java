@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.utils.FileUpload;
 import org.example.ChatGPT.ChatGPT;
 import org.example.ChatGPT.DallE;
@@ -25,7 +26,7 @@ import static java.lang.System.exit;
 public class MessageListener extends ListenerAdapter {
     private Dotenv dot;
     private String prefix;
-
+    public static String url="";
     public MessageListener(Dotenv dot) {
         this.dot = dot;
         prefix = dot.get("PREFIX");
@@ -78,6 +79,10 @@ public class MessageListener extends ListenerAdapter {
                 //event.getChannel().sendMessageFormat(eb.build()).queue();
                 event.getChannel().sendMessageEmbeds(eb.build()).queue();
 
+        }
+        if (message.equals(prefix+"hihihaha")){
+           GuildMemberListener.hihihaha = !GuildMemberListener.hihihaha;
+            event.getChannel().sendMessage("HihiHaha durumu: "+GuildMemberListener.hihihaha).queue();
         }
         else if(message.equals(prefix+"guncelle")){
             event.getMessage().addReaction(Emoji.fromUnicode("U+2705")).queue();
@@ -179,11 +184,13 @@ public class MessageListener extends ListenerAdapter {
             String prompt = message.replace(prefix+"rimage","");
             event.getChannel().sendTyping().queue();
             try {
-             String url = DallE.ImageCreaterRandomizer(prompt);
-             event.getChannel().sendMessageEmbeds(new EmbedBuilder().setImage(url).build()).queue();
+             url = DallE.ImageCreaterRandomizer(prompt);
+
+             event.getChannel().sendMessageEmbeds(new EmbedBuilder().setImage(url).build()).addActionRow(Button.primary("rimage_save","Save")).queue();
             }catch (Exception e){
                 event.getChannel().sendMessage("API de sıkıntı çıktı").queue();
             }
+
 
         }
 
