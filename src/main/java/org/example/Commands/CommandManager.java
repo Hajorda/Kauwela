@@ -53,7 +53,7 @@ public class CommandManager extends ListenerAdapter{
     private Dotenv env;
     private String botID;
     public static TextChannel textChannel;
-    String url;
+    public static String url;
 
     public CommandManager() {
         env= Dotenv.configure().load();

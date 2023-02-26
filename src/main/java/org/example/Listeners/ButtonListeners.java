@@ -3,6 +3,7 @@ package org.example.Listeners;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.example.Commands.CommandManager;
 
 import java.awt.*;
 
@@ -12,7 +13,7 @@ public class ButtonListeners extends ListenerAdapter{
         if (event.getComponentId().equals("rimage_save")) {
             EmbedBuilder saveGPT = new EmbedBuilder()
                     .setColor(Color.orange)
-                    .setImage(MessageListener.url)
+                    .setImage(CommandManager.url)
                     .setFooter(event.getUser().getName(), event.getUser().getAvatarUrl());
             event.getGuild().getTextChannelById("1079329718446342244").sendMessageEmbeds(saveGPT.build()).queue();
             event.reply("Resim Kaydedildi.").queue();
