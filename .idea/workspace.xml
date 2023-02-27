@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ee6ee57-111b-4285-a23e-f17abe0fb43a" name="Changes" comment="waifu">
-      <change afterPath="$PROJECT_DIR$/response.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/RandomCat/RandomCuteKedy.java" afterDir="false" />
+    <list default="true" id="5ee6ee57-111b-4285-a23e-f17abe0fb43a" name="Changes" comment="response.json eklendi">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Commands/CommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/CommandManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/RandomCat/RandomCat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/RandomCat/RandomCat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Listeners/MessageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Listeners/MessageListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -240,7 +236,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677448323869</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="response.json eklendi">
+      <created>1677512255471</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1677512255471</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -277,6 +280,7 @@
     <MESSAGE value="GPT komutları slash komudu yapıldı" />
     <MESSAGE value="GPT fix" />
     <MESSAGE value="waifu" />
-    <option name="LAST_COMMIT_MESSAGE" value="waifu" />
+    <MESSAGE value="response.json eklendi" />
+    <option name="LAST_COMMIT_MESSAGE" value="response.json eklendi" />
   </component>
 </project>

@@ -2,25 +2,24 @@ package org.example.Listeners;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.JDA;
+
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+
 import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
-import net.dv8tion.jda.api.utils.FileUpload;
+
 import org.example.ChatGPT.ChatGPT;
 import org.example.ChatGPT.DallE;
 
 import java.awt.*;
-import java.io.File;
+
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
-import java.net.InetAddress;
-import java.util.concurrent.TimeUnit;
+
 
 import static java.lang.System.exit;
 
@@ -210,6 +209,13 @@ public class MessageListener extends ListenerAdapter {
             }
 
 
+        } if (message.toLowerCase().contains("konya")) {
+            event.getMessage().addReaction(Emoji.fromUnicode("U+1F5FF")).queue();
+
+        } if (message.toLowerCase().contains("nerde")||message.toLowerCase().contains("nerede")){
+           if (!event.getMember().getUser().getId().equals("984469828008026192")){
+               event.getChannel().sendMessage("Ananın amında \n"+"*Ben bir botum, 'nerede' ile biten yorumlara otomatik olarak ananın amında yazıyorum. Kalbini kırdıysam özür dilerim*").queue();
+           }
         }
 
     }
