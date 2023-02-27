@@ -36,7 +36,7 @@ public class Main {
 
     public Main() throws LoginException {
         config = Dotenv.configure().load();
-        String token = config.get("TOKEN2");
+        String token = config.get("TOKEN");
 
 
 

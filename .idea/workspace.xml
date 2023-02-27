@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ee6ee57-111b-4285-a23e-f17abe0fb43a" name="Changes" comment="KedySearch">
+    <list default="true" id="5ee6ee57-111b-4285-a23e-f17abe0fb43a" name="Changes" comment="RSS">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Commands/CommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/CommandManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/RSS/rssReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/RSS/RssReader.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -266,7 +265,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677515354656</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="RSS">
+      <created>1677517620716</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1677517620716</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -281,7 +287,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Çalışmıyor şuanlık" />
     <MESSAGE value="Modified" />
     <MESSAGE value="Botun yeni bir sunucuya girince gönderileceği mesajlar ayarlandı" />
     <MESSAGE value="Bot aktif olunca mesaj gönderme" />
@@ -306,6 +311,7 @@
     <MESSAGE value="deneme" />
     <MESSAGE value="ASDFG" />
     <MESSAGE value="KedySearch" />
-    <option name="LAST_COMMIT_MESSAGE" value="KedySearch" />
+    <MESSAGE value="RSS" />
+    <option name="LAST_COMMIT_MESSAGE" value="RSS" />
   </component>
 </project>

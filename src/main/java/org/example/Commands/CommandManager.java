@@ -1,6 +1,7 @@
 package org.example.Commands;
 
 import com.rometools.rome.io.FeedException;
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioReference;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import com.sedmelluq.discord.lavaplayer.track.info.AudioTrackInfoBuilder;
@@ -181,6 +182,20 @@ public class CommandManager extends ListenerAdapter{
 
 
         }else if (command.equals("skip")) {
+            GuildMusicManager musicManager =PlayerManager.getInstance().getMusicManager(event.getGuild());
+            AudioPlayer audioPlayer = musicManager.audioPlayer;
+            if (!event.getGuild().getMemberById(botID).getVoiceState().inAudioChannel()){
+                event.reply("Ses kanalında değilim la").queue();
+
+            }
+            else if (audioPlayer.getPlayingTrack()==null){
+                event.replyEmbeds(new  EmbedBuilder().setDescription("Şuan herhangi bir şarkı çalmıyır").build()).queue();
+            }
+            else {
+                musicManager.scheduler.nextTrack();
+                event.reply("Sıradaki şarkıya geçildi.").queue();
+
+            }
 
         }
         else if(command.equals(("credits"))){
@@ -470,7 +485,7 @@ public class CommandManager extends ListenerAdapter{
             commandData.add(Commands.slash("help", "Command list"));
             commandData.add(Commands.slash("feedback", "Feedback"));
             commandData.add(Commands.slash("animerush", "Son çıkan animeyi gösterir"));
-
+            commandData.add(Commands.slash("skip", "Şarkıyı geçer"));
             commandData.add(Commands.slash("cutekedy", "Tatliş kediler gönderir."));
             commandData.add(Commands.slash("status", "Status of Bot"));
             commandData.add(Commands.slash("hug", "Keşke bana da birileri sarılsa").addOption(OptionType.MENTIONABLE,"hedef","Ona sıkıca sarılın",false));
