@@ -1,5 +1,6 @@
 package org.example.Commands;
 
+import com.rometools.rome.io.FeedException;
 import com.sedmelluq.discord.lavaplayer.track.AudioReference;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import com.sedmelluq.discord.lavaplayer.track.info.AudioTrackInfoBuilder;
@@ -36,6 +37,7 @@ import org.example.Listeners.MessageListener;
 import org.example.MusicPlayer.GuildMusicManager;
 import org.example.MusicPlayer.PlayerManager;
 import org.example.MusicPlayer.TrackScheduler;
+import org.example.RSS.RssReader;
 import org.example.RandomCat.RandomCat;
 import org.example.RandomCat.RandomCuteKedy;
 import org.example.RandomWaifu.RandomWaifu;
@@ -375,6 +377,7 @@ public class CommandManager extends ListenerAdapter{
                 event.replyEmbeds(randomkedi.build()).queue();
 
             } catch (IOException e) {
+                event.replyEmbeds(new EmbedBuilder().setDescription("API de sıkıntı var ").build()).queue();
                 throw new RuntimeException(e);
             }
 
@@ -397,6 +400,21 @@ public class CommandManager extends ListenerAdapter{
                 throw new RuntimeException(e);
 
             }
+
+        }else if (command.equals("animerush")){
+            try {
+                RssReader reader = new RssReader("https://www.animerush.tv/rss.xml");
+                EmbedBuilder anime = new EmbedBuilder()
+                        .setDescription(reader.getAnimeLink())
+                        .setTitle(reader.getLatestAnime());
+                event.replyEmbeds(anime.build()).queue();
+
+            } catch (Exception e) {
+                event.reply("Hata baby").queue();
+                throw new RuntimeException(e);
+            }
+
+
 
         }
         /*else if(command.equals("ask")){
@@ -451,6 +469,8 @@ public class CommandManager extends ListenerAdapter{
             commandData.add(Commands.slash("soundboard", "SoundBoard"));
             commandData.add(Commands.slash("help", "Command list"));
             commandData.add(Commands.slash("feedback", "Feedback"));
+            commandData.add(Commands.slash("animerush", "Son çıkan animeyi gösterir"));
+
             commandData.add(Commands.slash("cutekedy", "Tatliş kediler gönderir."));
             commandData.add(Commands.slash("status", "Status of Bot"));
             commandData.add(Commands.slash("hug", "Keşke bana da birileri sarılsa").addOption(OptionType.MENTIONABLE,"hedef","Ona sıkıca sarılın",false));

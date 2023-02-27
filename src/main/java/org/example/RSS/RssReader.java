@@ -8,16 +8,18 @@ import com.rometools.rome.io.XmlReader;
 import java.io.IOException;
 import java.net.URL;
 
-public class rssReader {
+public class RssReader {
    private String url ;
     private SyndFeed feed;
     private String description;
     private String docs;
     private String Author;
     private String title;
+    private String latestAnime;
+    private String AnimeLink;
 
 
-    public rssReader(String url) throws FeedException, IOException {
+    public RssReader(String url) throws FeedException, IOException {
         this.url =url;
        feed = new SyndFeedInput().build(new XmlReader(new URL(url)));
        description = feed.getDescription();
@@ -25,7 +27,8 @@ public class rssReader {
        Author=feed.getAuthor();
 
        title=feed.getTitle();
-
+       latestAnime = feed.getEntries().get(0).getTitle();
+       AnimeLink = feed.getEntries().get(0).getLink();
 
     }
 
@@ -43,5 +46,13 @@ public class rssReader {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getAnimeLink() {
+        return AnimeLink;
+    }
+
+    public String getLatestAnime() {
+        return latestAnime;
     }
 }
