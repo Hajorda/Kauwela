@@ -428,6 +428,7 @@ public class CommandManager extends ListenerAdapter{
         public void onGuildReady (GuildReadyEvent event){
             List<CommandData> commandData = new ArrayList<CommandData>();
 
+            commandData.add(Commands.slash("play", "Hardalı dinle çok iyi grup").addOption(OptionType.STRING, "music", "Gece Vakti'ini açmazsan darılırım", true));
             try {
                 OptionData kedyOption = new OptionData(OptionType.STRING,"tag","kedyler çok sevimli",true)
 
@@ -436,8 +437,6 @@ public class CommandManager extends ListenerAdapter{
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
-            commandData.add(Commands.slash("play", "Hardalı dinle çok iyi grup").addOption(OptionType.STRING, "music", "Gece Vakti'ini açmazsan darılırım", true));
             commandData.add(Commands.slash("uptime", "Bakalım köle bot ne kadardır çalışıyor"));
             commandData.add(Commands.slash("leave", "sg buradan bot"));
             commandData.add(Commands.slash("pause", "Şarkıyı durdurur."));
