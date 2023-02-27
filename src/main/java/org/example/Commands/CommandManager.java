@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.events.interaction.command.MessageContextInteractionE
 import net.dv8tion.jda.api.events.interaction.command.UserContextInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.interactions.commands.Command;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.Permission;
@@ -36,18 +37,24 @@ import org.example.MusicPlayer.GuildMusicManager;
 import org.example.MusicPlayer.PlayerManager;
 import org.example.MusicPlayer.TrackScheduler;
 import org.example.RandomCat.RandomCat;
+import org.example.RandomCat.RandomCuteKedy;
 import org.example.RandomWaifu.RandomWaifu;
 import org.jetbrains.annotations.NotNull;
 
+import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class CommandManager extends ListenerAdapter{
+    private RandomCuteKedy randomCuteKedy = new RandomCuteKedy();
     private List<EmbedBuilder> embedBuilders;
     private Random random;
     private int randomNumber;
@@ -357,6 +364,40 @@ public class CommandManager extends ListenerAdapter{
                 else {
                     event.replyEmbeds(new EmbedBuilder().setImage(new RandomWaifu("sfw","hug").getImageUrl()).build()).queue();
                 }
+        }else if(command.equals("cutekedy")){
+            RandomCat kedy = new RandomCat();
+            try {
+             RandomCuteKedy cat =   new RandomCuteKedy();
+                EmbedBuilder randomkedi = new EmbedBuilder()
+                        .setDescription("**Fact: **" + kedy.getFact())
+                        .setImage(cat.getImage("cute"));
+                // System.out.println(url);
+                event.replyEmbeds(randomkedi.build()).queue();
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+
+
+
+
+        }else if (command.equals("kedysearch")){
+            try {
+                String prompt =event.getOptions().get(0).getAsString();
+                RandomCuteKedy cat =   new RandomCuteKedy();
+                EmbedBuilder randomkedi = new EmbedBuilder()
+                        .setDescription(prompt)
+                        .setImage(cat.getImage(prompt));
+                // System.out.println(url);
+                event.replyEmbeds(randomkedi.build()).queue();
+
+            } catch (IOException e) {
+                event.replyEmbeds(new EmbedBuilder().setDescription("Bulunamadı").build()).queue();
+                throw new RuntimeException(e);
+
+            }
+
         }
         /*else if(command.equals("ask")){
             String question = (ChatGPT.chatgpt(event.getOptions().get(0).getAsString()));
@@ -386,6 +427,16 @@ public class CommandManager extends ListenerAdapter{
         @Override
         public void onGuildReady (GuildReadyEvent event){
             List<CommandData> commandData = new ArrayList<CommandData>();
+
+            try {
+                OptionData kedyOption = new OptionData(OptionType.STRING,"tag","kedyler çok sevimli",true)
+
+                        .addChoices(randomCuteKedy.getChoices(10));
+                commandData.add(Commands.slash("kedysearch", "Kedy Arama Motoru").addOptions(kedyOption));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
             commandData.add(Commands.slash("play", "Hardalı dinle çok iyi grup").addOption(OptionType.STRING, "music", "Gece Vakti'ini açmazsan darılırım", true));
             commandData.add(Commands.slash("uptime", "Bakalım köle bot ne kadardır çalışıyor"));
             commandData.add(Commands.slash("leave", "sg buradan bot"));
@@ -401,9 +452,11 @@ public class CommandManager extends ListenerAdapter{
             commandData.add(Commands.slash("soundboard", "SoundBoard"));
             commandData.add(Commands.slash("help", "Command list"));
             commandData.add(Commands.slash("feedback", "Feedback"));
+            commandData.add(Commands.slash("cutekedy", "Tatliş kediler gönderir."));
             commandData.add(Commands.slash("status", "Status of Bot"));
             commandData.add(Commands.slash("hug", "Keşke bana da birileri sarılsa").addOption(OptionType.MENTIONABLE,"hedef","Ona sıkıca sarılın",false));
             commandData.add(Commands.slash("waifu", "Keşke anime kızları gerçek olsa"));
+
             commandData.add(Commands.context(Command.Type.USER, "Get user avatar"));
             commandData.add(Commands.message("Count words"));
            // commandData.add(Commands.slash("ask", "ChatGPT2  ile flörtme şansı").addOption(OptionType.STRING, "soru", "Anneni sor", true));

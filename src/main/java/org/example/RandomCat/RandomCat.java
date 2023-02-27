@@ -21,7 +21,8 @@ public class RandomCat {
             result = result.replaceAll("<[^>]*>", "");
             byte[] bytes = result.substring(result.indexOf("fact")+7,result.indexOf("length")-3).getBytes(StandardCharsets.UTF_8);
             fact =  new String(bytes, StandardCharsets.ISO_8859_1);
-           // System.out.println(fact);
+            System.out.println(result);
+             System.out.println(fact);
 
         }catch (Exception e){
             System.out.println(e.getMessage());
