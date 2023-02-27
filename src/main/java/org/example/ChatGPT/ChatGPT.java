@@ -8,7 +8,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 import java.time.Duration;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
-
+//SAJNSJKANJDNASJKDNAJKD
 public class ChatGPT {
 
     public static String chatgpt(String text,int maxToken, double tempaerature,double topP,double frequencyPenalty,double preesencePenalty) {

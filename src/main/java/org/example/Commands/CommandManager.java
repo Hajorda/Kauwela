@@ -77,7 +77,7 @@ public class CommandManager extends ListenerAdapter{
     }
 
 
-
+//ASASADASDSD
 
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
