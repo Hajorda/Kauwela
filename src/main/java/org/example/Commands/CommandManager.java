@@ -37,6 +37,7 @@ import org.example.MusicPlayer.PlayerManager;
 import org.example.RSS.RssReader;
 import org.example.RandomCat.RandomCat;
 import org.example.RandomCat.RandomCuteKedy;
+import org.example.RandomWaifu.RandomActivity;
 import org.example.RandomWaifu.RandomMeme;
 import org.example.RandomWaifu.RandomWaifu;
 import org.jetbrains.annotations.NotNull;
@@ -240,7 +241,8 @@ public class CommandManager extends ListenerAdapter {
                     .setFooter("Kauwela Bot", "https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
                     .addField("Developers", "Hajorda#6261 , Cicikuş#0309", false)
                     .addField("Contact", "You can contact us for any feedback with using Discord", false)
-                    .addField("", "For additional information you can use the buttons.", false);
+                    .addField("", "For additional information you can use the buttons.", false)
+                    .setImage("https://media.discordapp.net/attachments/984473352351670302/1080264390198177893/NdxQXD-Hg0i9-VDaC4UXx-transformed_Ozel.png");
 
             event.replyEmbeds(creditEmbed.build()).addActionRow(Button.link("https://github.com/Hajorda", "Hajorda's GitHub"),
                     Button.link("https://github.com/Cicikuss", "Cicikus's GitHub")).queue();
@@ -311,7 +313,8 @@ public class CommandManager extends ListenerAdapter {
                             `/trmeme`  Gives you turkish memes
                             `/waifu`  Gives you a random waifu picture
                             `/cutekedy`  Gives you cute kedys
-                            `/kedysearch`  Biggest kedy searcing engine system in discord""", true)
+                            `/kedysearch`  Biggest kedy searcing engine system in discord
+                            `/activity`  Are you bored? This commands give you random activity""", true)
                     .addField("", "Also When you right click a user from menu -> apps, you can get the users profile image`\n" +
                             "\uD83E\uDD16 Ayrıca botu etiketleyip bot ile GPT3 kullanarak sohbet edebilirsin.", true);
 
@@ -544,6 +547,9 @@ public class CommandManager extends ListenerAdapter {
                 throw new RuntimeException(e);
             }
         }
+        else if(command.equals("activity")){
+            event.replyEmbeds(RandomActivity.randomActivityGenerator().build()).queue();
+        }
 
 
 
@@ -606,6 +612,7 @@ public class CommandManager extends ListenerAdapter {
         commandData.add(Commands.slash("status", "Status of Bot"));
         commandData.add(Commands.slash("hug", "Keşke bana da birileri sarılsa").addOption(OptionType.MENTIONABLE, "hedef", "Ona sıkıca sarılın", false));
         commandData.add(Commands.slash("waifu", "Keşke anime kızları gerçek olsa"));
+        commandData.add(Commands.slash("activity", "Keşke anime kızları gerçek olsa"));
 
         commandData.add(Commands.context(Command.Type.USER, "Get user avatar"));
         commandData.add(Commands.message("Count words"));
