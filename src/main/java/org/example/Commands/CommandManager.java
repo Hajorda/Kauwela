@@ -8,6 +8,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.EmbedBuilder;
 
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
@@ -52,6 +53,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 public class CommandManager extends ListenerAdapter {
@@ -115,7 +117,9 @@ public class CommandManager extends ListenerAdapter {
             EmbedBuilder soru = new EmbedBuilder().setDescription(event.getOptions().get(0).getAsString()).setTitle("Soru");
             event.replyEmbeds(soru.build(), embedBuilders.get(randomNumber).setColor(Color.red).build()).queue();
 
-        } else if (command.equals("kedy")) {
+        }
+
+        else if (command.equals("kedy")) {
 
             RandomCat kedy = new RandomCat();
             System.out.println(kedy.getFact());
@@ -210,6 +214,7 @@ public class CommandManager extends ListenerAdapter {
         } else if (command.equals("skip")) {
             GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(event.getGuild());
             AudioPlayer audioPlayer = musicManager.audioPlayer;
+            BlockingQueue<AudioTrack> queue = musicManager.scheduler.queue;
             if (!event.getGuild().getMemberById(botID).getVoiceState().inAudioChannel()) {
                 event.reply("Ses kanalında değilim la").queue();
 
@@ -217,7 +222,10 @@ public class CommandManager extends ListenerAdapter {
                 event.replyEmbeds(new EmbedBuilder().setDescription("Şuan herhangi bir şarkı çalmıyor").build()).queue();
             } else if (!event.getMember().getVoiceState().inAudioChannel()) {
                 event.reply("Kardeşşşş ses kanalında değilsin").queue();
-            } else {
+            }else if (queue.isEmpty()){
+                event.reply("Çalma listesi boş").queue();
+            }
+            else {
                 musicManager.scheduler.nextTrack();
                 event.reply("Sıradaki şarkıya geçildi.").queue();
 
@@ -297,6 +305,7 @@ public class CommandManager extends ListenerAdapter {
                             `/kedy`  Random cat photos and fun facts
                             `/soundboard`  Generates the soundboard
                             `/randomgpt`  Chat with GPT3 but random settings
+                            `/rimage`  Generates images with Dale2
                             `/rimage`  Generates images with Dale2
                             `/randommeme`  Gives you memes
                             `/trmeme`  Gives you turkish memes
@@ -479,6 +488,47 @@ public class CommandManager extends ListenerAdapter {
 
             }
 
+        }else if (command.equals("queue")){
+            if (!event.getGuild().getMemberById(botID).getVoiceState().inAudioChannel()) {
+                event.reply("Ses kanalında değilim la").queue();
+
+            } else if (!event.getMember().getVoiceState().inAudioChannel()) {
+                event.reply("Kardeşşşş ses kanalında değilsin").queue();
+            }else {
+                GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(event.getGuild());
+                BlockingQueue<AudioTrack> queue = musicManager.scheduler.queue;
+                if (queue.isEmpty()){
+                    event.reply("Çalma listesi boş").queue();
+                }
+                else {
+                     int trackCount = Math.min(queue.size(), 20);
+                   List<AudioTrack> trackList = new ArrayList<>(queue);
+
+                    List<MessageEmbed> embeds = new ArrayList<>();
+                    EmbedBuilder embed = new EmbedBuilder()
+                            .setTitle("Çalma listesi:");
+                    embeds.add(embed.build());
+
+                    for (int i = 0; i <  trackCount; i++) {
+                         AudioTrack track = trackList.get(i);
+                         AudioTrackInfo info = track.getInfo();
+                        long[] times = calculateTime(info.length);
+                        EmbedBuilder builder = new EmbedBuilder()
+                                .setAuthor(info.author)
+                                .setDescription(info.title)
+                                .addField("",times[0]+":"+times[1]+":"+times[2]+":"+times[3],false)
+                                .setThumbnail(thumbnail(info.uri));
+                        embeds.add(builder.build());
+
+
+
+                    }
+                    event.replyEmbeds(embeds).queue();
+                }
+
+
+            }
+
         }
         else if(command.equals("randommeme")){
             try {
@@ -553,8 +603,6 @@ public class CommandManager extends ListenerAdapter {
         commandData.add(Commands.slash("animerush", "Son çıkan animeyi gösterir"));
         commandData.add(Commands.slash("skip", "Şarkıyı geçer"));
         commandData.add(Commands.slash("cutekedy", "Tatliş kediler gönderir."));
-        commandData.add(Commands.slash("randommeme", "MEME"));
-        commandData.add(Commands.slash("trmeme", "MEME BUT TR"));
         commandData.add(Commands.slash("status", "Status of Bot"));
         commandData.add(Commands.slash("hug", "Keşke bana da birileri sarılsa").addOption(OptionType.MENTIONABLE, "hedef", "Ona sıkıca sarılın", false));
         commandData.add(Commands.slash("waifu", "Keşke anime kızları gerçek olsa"));
@@ -564,6 +612,9 @@ public class CommandManager extends ListenerAdapter {
         // commandData.add(Commands.slash("ask", "ChatGPT2  ile flörtme şansı").addOption(OptionType.STRING, "soru", "Anneni sor", true));
         commandData.add(Commands.slash("kedy", "Günlük kedy dozunu karşılar"));
         commandData.add(Commands.slash("nowplaying", "Çalan şarkıyı gösterir."));
+        commandData.add(Commands.slash("queue", "Çalma listesini gösterir."));
+        commandData.add(Commands.slash("randommeme", "MEME"));
+        commandData.add(Commands.slash("trmeme", "MEME BUT TR"));
         event.getGuild().updateCommands().addCommands(commandData).queue();
     }
 
