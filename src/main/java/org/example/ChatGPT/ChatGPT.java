@@ -57,7 +57,7 @@ public class ChatGPT {
             answer.updateAndGet(v -> v + name);
         });
         System.out.println(answer.get());
-        return answer.get().substring(answer.get().indexOf("\n")).trim();
+        return answer.get().substring(answer.get().indexOf("=")+1).trim();
 
 
     }
@@ -80,7 +80,7 @@ public class ChatGPT {
             answer.updateAndGet(v -> v + name);
         });
         System.out.println(answer.get());
-        return answer.get().substring(answer.get().indexOf("\n")).trim();
+        return answer.get().substring(answer.get().indexOf("=")+1).trim();
 
 
     }

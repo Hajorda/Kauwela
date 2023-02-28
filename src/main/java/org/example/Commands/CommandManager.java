@@ -1,23 +1,16 @@
 package org.example.Commands;
 
-import com.rometools.rome.io.FeedException;
+
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
-import com.sedmelluq.discord.lavaplayer.track.AudioReference;
-import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
-import com.sedmelluq.discord.lavaplayer.track.info.AudioTrackInfoBuilder;
+
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.emoji.CustomEmoji;
-import net.dv8tion.jda.api.events.interaction.command.MessageContextInteractionEvent;
-import net.dv8tion.jda.api.events.interaction.command.UserContextInteractionEvent;
-import net.dv8tion.jda.api.events.session.ReadyEvent;
+
 import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
-import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.GuildVoiceState;
-import net.dv8tion.jda.api.entities.UserSnowflake;
+
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
@@ -27,7 +20,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
-import net.dv8tion.jda.api.interactions.components.ItemComponent;
+
 import net.dv8tion.jda.api.interactions.components.text.TextInput;
 import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
 import net.dv8tion.jda.api.interactions.modals.Modal;
@@ -37,20 +30,21 @@ import org.example.ChatGPT.DallE;
 import org.example.Listeners.MessageListener;
 import org.example.MusicPlayer.GuildMusicManager;
 import org.example.MusicPlayer.PlayerManager;
-import org.example.MusicPlayer.TrackScheduler;
+
 import org.example.RSS.RssReader;
 import org.example.RandomCat.RandomCat;
 import org.example.RandomCat.RandomCuteKedy;
 import org.example.RandomWaifu.RandomWaifu;
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.*;
+
 import java.awt.*;
+
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
-import java.net.MalformedURLException;
-import java.net.URL;
+
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -153,7 +147,7 @@ public class CommandManager extends ListenerAdapter{
         } else if (command.equals("pause")) {
 
             GuildMusicManager musicManager =PlayerManager.getInstance().getMusicManager(event.getGuild());
-            musicManager.scheduler.player.stopTrack();
+            musicManager.scheduler.player.setPaused(true);
 
             event.reply("Müzik durduruldu").queue();
 
@@ -179,7 +173,8 @@ public class CommandManager extends ListenerAdapter{
         }
         else if (command.equals("resume")){
             GuildMusicManager musicManager =PlayerManager.getInstance().getMusicManager(event.getGuild());
-
+            musicManager.scheduler.player.setPaused(false);
+            event.reply("Müzik başlatıldı.").queue();
 
         }else if (command.equals("skip")) {
             GuildMusicManager musicManager =PlayerManager.getInstance().getMusicManager(event.getGuild());
@@ -190,6 +185,9 @@ public class CommandManager extends ListenerAdapter{
             }
             else if (audioPlayer.getPlayingTrack()==null){
                 event.replyEmbeds(new  EmbedBuilder().setDescription("Şuan herhangi bir şarkı çalmıyır").build()).queue();
+            }
+            else if(!event.getMember().getVoiceState().inAudioChannel()){
+                event.reply("Kardeşşşş ses kanalında değilsin").queue();
             }
             else {
                 musicManager.scheduler.nextTrack();
@@ -360,13 +358,15 @@ public class CommandManager extends ListenerAdapter{
 
             String prompt = event.getOptions().get(0).getAsString();
             event.deferReply().queue();
-            try {
-                url = DallE.ImageCreaterRandomizer(prompt);
 
-                event.getHook().sendMessageEmbeds(new EmbedBuilder().setImage(url).setFooter(event.getUser().getName(),event.getUser().getAvatarUrl()).setAuthor(prompt).setColor(Color.magenta).build()).addActionRow(Button.primary("rimage_save","Save")).queue();
-            }catch (Exception e){
-                event.getHook().sendMessage("API de sıkıntı çıktı").queue();
-            }
+
+              try {
+                  url = DallE.ImageCreaterRandomizer(prompt);
+
+                  event.getHook().sendMessageEmbeds(new EmbedBuilder().setImage(url).setFooter(event.getUser().getName(),event.getUser().getAvatarUrl()).setAuthor(prompt).setColor(Color.magenta).build()).addActionRow(Button.primary("rimage_save","Save")).queue();
+              }catch (Exception e){
+                  event.getHook().sendMessage("API de sıkıntı çıktı").queue();
+              }
 
         }else if(command.equals("waifu")){
             event.replyEmbeds(new EmbedBuilder().setImage(new RandomWaifu("sfw","waifu").getImageUrl()).build()).queue();
@@ -419,10 +419,12 @@ public class CommandManager extends ListenerAdapter{
         }else if (command.equals("animerush")){
             try {
                 RssReader reader = new RssReader("https://www.animerush.tv/rss.xml");
-                EmbedBuilder anime = new EmbedBuilder()
+               /* EmbedBuilder anime = new EmbedBuilder()
                         .setDescription(reader.getAnimeLink())
-                        .setTitle(reader.getLatestAnime());
-                event.replyEmbeds(anime.build()).queue();
+                        .setThumbnail("https/www.animerush.tv/anime-images-big/")
+                        .setTitle(reader.getLatestAnime());*/
+
+                event.reply(reader.getAnimeLink()).queue();
 
             } catch (Exception e) {
                 event.reply("Hata baby").queue();
@@ -472,6 +474,7 @@ public class CommandManager extends ListenerAdapter{
             }
             commandData.add(Commands.slash("uptime", "Bakalım köle bot ne kadardır çalışıyor"));
             commandData.add(Commands.slash("leave", "sg buradan bot"));
+            commandData.add(Commands.slash("resume", "Şarkıyı devam ettirir"));
             commandData.add(Commands.slash("pause", "Şarkıyı durdurur."));
             commandData.add(Commands.slash("credits", "Kredi skorunu gösterir"));
             commandData.add(Commands.slash("8top", "Anneni sor").addOption(OptionType.STRING, "soru", "Sorunu sor bakem", true));

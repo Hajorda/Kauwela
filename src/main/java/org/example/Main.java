@@ -16,10 +16,9 @@ import org.example.Listeners.ButtonListeners;
 import org.example.Listeners.GuildListener;
 import org.example.Listeners.GuildMemberListener;
 import org.example.Listeners.MessageListener;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 import javax.security.auth.login.LoginException;
-import java.awt.*;
+
 
 public class Main {
     private final Dotenv config;
@@ -36,7 +35,7 @@ public class Main {
 
     public Main() throws LoginException {
         config = Dotenv.configure().load();
-        String token = config.get("TOKEN");
+        String token = config.get("TOKEN2");
 
 
 
