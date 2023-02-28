@@ -174,13 +174,13 @@ public class MessageListener extends ListenerAdapter {
 
         }
         else if (event.getMessage().getMentions().getUsers().size()> 0){
-            if (event.getMessage().getMentions().getUsers().get(0).getId().equals("1078827790910115849")){
+            if (event.getMessage().getMentions().getUsers().get(0).getId().equals("984469828008026192")){
 
-                String prompt = message.replace("<@1078827790910115849>","");
+                String prompt = message.replace("<@984469828008026192>","");
                 event.getChannel().sendTyping().queue();
                 String response =  ChatGPT.chatgpt(prompt);
 
-                event.getChannel().sendMessage(response.substring(3,response.lastIndexOf("index")-3)+event.getGuild().getMemberById("984469828008026192").getUser().getAsMention()).queue();
+                event.getChannel().sendMessage(response.substring(3,response.lastIndexOf("index")-3)).queue();
             }
         }
         else if(message.indexOf(prefix+"randomgpt") !=-1){

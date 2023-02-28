@@ -82,6 +82,10 @@ public class appCommands extends ListenerAdapter {
        }
         else if(event.getEmoji().equals(Emoji.fromUnicode("U+1F910"))){
             event.getChannel().sendMessage("Emoji2").queue();
+            AudioManager audioManager = event.getGuild().getAudioManager();
+            VoiceChannel memberchannel = event.getMember().getVoiceState().getChannel().asVoiceChannel();
+            audioManager.openAudioConnection(memberchannel);
+            PlayerManager.getInstance().loadAndPlayNonEmbed(event.getGuild().getTextChannels().get(0), "https://www.youtu.be/UZ3kt2T0m-Q");
         }
         else if(event.getEmoji().equals(Emoji.fromUnicode("U+1F922"))){
             event.getChannel().sendMessage("Emoji3").queue();

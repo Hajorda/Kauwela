@@ -18,7 +18,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class GuildMemberListener extends ListenerAdapter {
-public static boolean hihihaha = true;
+public static boolean hihihaha = false;
     @Override
     public void onGuildMemberJoin(GuildMemberJoinEvent event) {
 
@@ -34,7 +34,8 @@ public static boolean hihihaha = true;
                 .setThumbnail(avatarUrl)
                 .setFooter("Kauwela Bot", "https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
                 .setAuthor("Sunucuya yeni biri katıldı!")
-                .addField(name+" adlı kullanıcı sunucuya katıldı!", "", false);
+                .addField(name+" adlı kullanıcı sunucuya katıldı!", "", false)
+                .addField("","Sunucunun güncel kişi sayısı: "+event.getGuild().getMemberCount(),false);
 
         event.getJDA().getGuildById("984469721455919174").getTextChannelById("984473410044305459").sendMessageEmbeds(joinEmbed.build()).queue();
     }
@@ -51,7 +52,8 @@ public static boolean hihihaha = true;
                 .setThumbnail(avatarUrl)
                 .setFooter("Kauwela Bot", "https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
                 .setAuthor("Sunucuya biri ayrıldı")
-                .addField(name+" adlı kullanıcı sunucuya terk etti!", "", false);
+                .addField(name+" adlı kullanıcı sunucudan ayrıldı.", "", false)
+                .addField("","Sunucunun güncel kişi sayısı: "+event.getGuild().getMemberCount(),false);
 
         event.getJDA().getGuildById("984469721455919174").getTextChannelById("984473410044305459").sendMessageEmbeds(leaveEmbed.build()).queue();
 
