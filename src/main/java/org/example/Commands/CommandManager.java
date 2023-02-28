@@ -37,6 +37,7 @@ import org.example.MusicPlayer.PlayerManager;
 import org.example.RSS.RssReader;
 import org.example.RandomCat.RandomCat;
 import org.example.RandomCat.RandomCuteKedy;
+import org.example.RandomCat.RandomDog;
 import org.example.RandomWaifu.RandomActivity;
 import org.example.RandomWaifu.RandomMeme;
 import org.example.RandomWaifu.RandomWaifu;
@@ -289,7 +290,7 @@ public class CommandManager extends ListenerAdapter {
                             `/support`  Bot's support server invite link
                             `/credits`  People behind the Bot
                             `/uptime`  How long the bot has been running
-                            `/status`  Stats of Bot""", false)
+                            `/status`  Stats of Bot""", true)
                     .addField("\uD83C\uDFB5 Music Commands", """
                             `/play`  Playing music
                             `/skip`  Skip the music
@@ -308,15 +309,16 @@ public class CommandManager extends ListenerAdapter {
                             `/soundboard`  Generates the soundboard
                             `/randomgpt`  Chat with GPT3 but random settings
                             `/rimage`  Generates images with Dale2
-                            `/rimage`  Generates images with Dale2
                             `/randommeme`  Gives you memes
                             `/trmeme`  Gives you turkish memes
                             `/waifu`  Gives you a random waifu picture
                             `/cutekedy`  Gives you cute kedys
                             `/kedysearch`  Biggest kedy searcing engine system in discord
-                            `/activity`  Are you bored? This commands give you random activity""", true)
+                            `/activity`  Are you bored? This commands give you random activity
+                            `/hug`  Yalnız mısın hiç arkadaşın yok mu bu komut tam sana göre kısaca e-sarılma komudu
+                            `/randomdog`  Random Dogs""", true)
                     .addField("", "Also When you right click a user from menu -> apps, you can get the users profile image`\n" +
-                            "\uD83E\uDD16 Ayrıca botu etiketleyip bot ile GPT3 kullanarak sohbet edebilirsin.", true);
+                            "\uD83E\uDD16 Ayrıca botu etiketleyip bot ile GPT3 kullanarak sohbet edebilirsin.", false);
 
 
             event.replyEmbeds(embedHelp.build()).addActionRow(Button.link("https://ptb.discord.com/api/oauth2/authorize?client_id=984469828008026192&permissions=8&scope=bot%20applications.commands", "Invite"),
@@ -550,6 +552,15 @@ public class CommandManager extends ListenerAdapter {
         else if(command.equals("activity")){
             event.replyEmbeds(RandomActivity.randomActivityGenerator().build()).queue();
         }
+        else if(command.equals("randomdog")){
+            String url = RandomDog.randomDogGeneator();
+            System.out.println(url.substring(url.length()-3,url.length()));
+                    if(url.substring(url.length()-3,url.length()).equals("mp4")){
+                        event.reply("**A random dog video** "+url).queue();
+                    }
+                    else
+                    event.replyEmbeds(new EmbedBuilder().setImage(url).setColor(Color.YELLOW).setAuthor("A random dog picture").setFooter("KauwelaBot","https://cdn.discordapp.com/attachments/984469722500329474/1076536703365435522/image.png").build()).queue();
+        }
 
 
 
@@ -612,8 +623,8 @@ public class CommandManager extends ListenerAdapter {
         commandData.add(Commands.slash("status", "Status of Bot"));
         commandData.add(Commands.slash("hug", "Keşke bana da birileri sarılsa").addOption(OptionType.MENTIONABLE, "hedef", "Ona sıkıca sarılın", false));
         commandData.add(Commands.slash("waifu", "Keşke anime kızları gerçek olsa"));
-        commandData.add(Commands.slash("activity", "Keşke anime kızları gerçek olsa"));
-
+        commandData.add(Commands.slash("activity", "Canın mı sıkıldı"));
+        commandData.add(Commands.slash("randomdog", "köpek "));
         commandData.add(Commands.context(Command.Type.USER, "Get user avatar"));
         commandData.add(Commands.message("Count words"));
         // commandData.add(Commands.slash("ask", "ChatGPT2  ile flörtme şansı").addOption(OptionType.STRING, "soru", "Anneni sor", true));
