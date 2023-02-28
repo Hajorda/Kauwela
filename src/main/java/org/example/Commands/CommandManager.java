@@ -3,6 +3,8 @@ package org.example.Commands;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 
+import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.EmbedBuilder;
 
@@ -50,18 +52,18 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-public class CommandManager extends ListenerAdapter{
-    private RandomCuteKedy randomCuteKedy = new RandomCuteKedy();
-    private List<EmbedBuilder> embedBuilders;
-    private Random random;
+public class CommandManager extends ListenerAdapter {
+    private final RandomCuteKedy randomCuteKedy = new RandomCuteKedy();
+    private final List<EmbedBuilder> embedBuilders;
+    private final Random random;
     private int randomNumber;
-    private Dotenv env;
-    private String botID;
+    private final Dotenv env;
+    private final String botID;
     public static TextChannel textChannel;
     public static String url;
 
     public CommandManager() {
-        env= Dotenv.configure().load();
+        env = Dotenv.configure().load();
         botID = env.get("BOTID");
         embedBuilders = new ArrayList<>();
         random = new Random();
@@ -73,7 +75,31 @@ public class CommandManager extends ListenerAdapter{
         embedBuilders.add(new EmbedBuilder().setDescription("İnan bilmiyorum").setImage("https://galeri14.uludagsozluk.com/844/inan-bilmiyorum_2286860.jpg"));
     }
 
+    private String thumbnail(String url)  {
+        if (url.contains("youtube")){
 
+
+            return   "http://img.youtube.com/vi/"+ url.substring(url.indexOf("v=")+2)+"/0.jpg";
+        }
+        else if(url.contains("youtube") && url.contains("&index")){
+            return   "http://img.youtube.com/vi/"+ url.substring(url.indexOf("v=")+2,url.indexOf("&index"))+"/0.jpg";
+        }
+        return null;
+    }
+
+    private long[] calculateTime(long time){
+        long[] duration = new long[4];
+        duration[0]= time / (1000 * 60 * 60);
+        time = time % (1000 * 60 * 60);
+        duration[1]= time / (1000 * 60);
+        time = time % (1000 * 60);
+        duration[2]= time / 1000;
+        time = time % 1000;
+        duration[3] = time;
+        return  duration;
+
+
+    }
 //ASASADASDSD
 
     @Override
@@ -125,40 +151,44 @@ public class CommandManager extends ListenerAdapter{
 
         } else if (command.equals("play")) {
 
-            if(!event.getMember().getVoiceState().inAudioChannel()){
+            if (!event.getMember().getVoiceState().inAudioChannel()) {
 
-                event.reply("İlk önce ses kanalına girmelisin" ).queue();
-            }else {
+                event.reply("İlk önce ses kanalına girmelisin").queue();
+            } else {
                 AudioManager audioManager = event.getGuild().getAudioManager();
                 VoiceChannel memberchanne = event.getMember().getVoiceState().getChannel().asVoiceChannel();
                 audioManager.openAudioConnection(memberchanne);
 
-                PlayerManager.getInstance().loadAndPlay(event.getChannel().asTextChannel(),event.getOptions().get(0).getAsString());
+                PlayerManager.getInstance().loadAndPlay(event.getChannel().asTextChannel(), event.getOptions().get(0).getAsString());
 
                 textChannel = event.getChannel().asTextChannel();
-                event.reply(event.getMember().getAsMention()+"tarafından listeye şarkı eklendi.").queue();
-
-
-
+                event.reply(event.getMember().getAsMention() + "tarafından listeye şarkı eklendi.").queue();
 
 
             }
 
         } else if (command.equals("pause")) {
 
-            GuildMusicManager musicManager =PlayerManager.getInstance().getMusicManager(event.getGuild());
-            musicManager.scheduler.player.setPaused(true);
-
-            event.reply("Müzik durduruldu").queue();
-
-
-        }
-        else if(command.equals("leave")){
-            if (!event.getGuild().getMemberById(botID).getVoiceState().inAudioChannel()){
+            GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(event.getGuild());
+            if (!event.getGuild().getMemberById(botID).getVoiceState().inAudioChannel()) {
                 event.reply("Ses kanalında değilim la").queue();
 
+            } else if (!event.getMember().getVoiceState().inAudioChannel()) {
+                event.reply("Kardeşşşş ses kanalında değilsin").queue();
+            } else {
+                musicManager.scheduler.player.setPaused(true);
+
+                event.reply("Müzik durduruldu").queue();
             }
-            else {
+
+
+        } else if (command.equals("leave")) {
+            if (!event.getGuild().getMemberById(botID).getVoiceState().inAudioChannel()) {
+                event.reply("Ses kanalında değilim la").queue();
+
+            } else if (!event.getMember().getVoiceState().inAudioChannel()) {
+                event.reply("Kardeşşşş ses kanalında değilsin").queue();
+            } else {
 
                 GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(event.getGuild());
                 AudioManager audioManager = event.getGuild().getAudioManager();
@@ -170,87 +200,76 @@ public class CommandManager extends ListenerAdapter{
             }
 
 
-        }
-        else if (command.equals("resume")){
-            GuildMusicManager musicManager =PlayerManager.getInstance().getMusicManager(event.getGuild());
+        } else if (command.equals("resume")) {
+            GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(event.getGuild());
             musicManager.scheduler.player.setPaused(false);
             event.reply("Müzik başlatıldı.").queue();
 
-        }else if (command.equals("skip")) {
-            GuildMusicManager musicManager =PlayerManager.getInstance().getMusicManager(event.getGuild());
+        } else if (command.equals("skip")) {
+            GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(event.getGuild());
             AudioPlayer audioPlayer = musicManager.audioPlayer;
-            if (!event.getGuild().getMemberById(botID).getVoiceState().inAudioChannel()){
+            if (!event.getGuild().getMemberById(botID).getVoiceState().inAudioChannel()) {
                 event.reply("Ses kanalında değilim la").queue();
 
-            }
-            else if (audioPlayer.getPlayingTrack()==null){
-                event.replyEmbeds(new  EmbedBuilder().setDescription("Şuan herhangi bir şarkı çalmıyır").build()).queue();
-            }
-            else if(!event.getMember().getVoiceState().inAudioChannel()){
+            } else if (audioPlayer.getPlayingTrack() == null) {
+                event.replyEmbeds(new EmbedBuilder().setDescription("Şuan herhangi bir şarkı çalmıyor").build()).queue();
+            } else if (!event.getMember().getVoiceState().inAudioChannel()) {
                 event.reply("Kardeşşşş ses kanalında değilsin").queue();
-            }
-            else {
+            } else {
                 musicManager.scheduler.nextTrack();
                 event.reply("Sıradaki şarkıya geçildi.").queue();
 
             }
 
-        }
-        else if(command.equals(("credits"))){
+        } else if (command.equals(("credits"))) {
 
             EmbedBuilder creditEmbed = new EmbedBuilder()
                     .setAuthor("Credits")
                     .setColor(Color.YELLOW)
                     .setThumbnail("https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
-                    .setFooter("Kauwela Bot","https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
-                    .addField("Developers","Hajorda#6261 , Cicikuş#0309",false)
-                    .addField("Contact","You can contact us for any feedback with using Discord" ,false)
-                    .addField("","For additional information you can use the buttons." ,false);
+                    .setFooter("Kauwela Bot", "https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
+                    .addField("Developers", "Hajorda#6261 , Cicikuş#0309", false)
+                    .addField("Contact", "You can contact us for any feedback with using Discord", false)
+                    .addField("", "For additional information you can use the buttons.", false);
 
-                event.replyEmbeds(creditEmbed.build()).addActionRow(Button.link("https://github.com/Hajorda", "Hajorda's GitHub"),
-                        Button.link("https://github.com/Cicikuss", "Cicikus's GitHub")).queue();
-        }
-        else if (command.equals("clear")) {
+            event.replyEmbeds(creditEmbed.build()).addActionRow(Button.link("https://github.com/Hajorda", "Hajorda's GitHub"),
+                    Button.link("https://github.com/Cicikuss", "Cicikus's GitHub")).queue();
+        } else if (command.equals("clear")) {
 
             System.out.println("CLEAR KOMUDUU!!!");
             int sayi = event.getOptions().get(0).getAsInt();
-            if(sayi <100) {
+            if (sayi < 100) {
                 event.getChannel().asTextChannel().getIterableHistory().takeAsync(sayi + 1).thenAccept(event.getChannel()::purgeMessages);
 
                 event.getChannel().sendMessage(sayi + " kadar mesaj silindi!").queue(m -> m.delete().queueAfter(5, TimeUnit.SECONDS));
-            }
-            else
+            } else
                 event.reply("100 den fazla mesaj silemezsin!").queue(m -> m.deleteOriginal().queueAfter(5, TimeUnit.SECONDS));
 
-        }
-        else if (command.equals("serverinfo")) {
+        } else if (command.equals("serverinfo")) {
             EmbedBuilder serverEmbed = new EmbedBuilder()
-                    .setAuthor(event.getGuild().getName(),event.getGuild().getIconUrl())
+                    .setAuthor(event.getGuild().getName(), event.getGuild().getIconUrl())
                     .setColor(Color.YELLOW)
                     .setThumbnail("https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
-                    .setFooter("Kauwela Bot","https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
-                    .addField("Server Name",event.getGuild().getName(),true)
-                    .addField("Server ID","" ,true)
-                    .addField("Owner","" ,true)
-                    .addField("Creation Date","" ,true)
-                    .addField("Members","" ,true)
-                    .addField("Other","" ,true);
+                    .setFooter("Kauwela Bot", "https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
+                    .addField("Server Name", event.getGuild().getName(), true)
+                    .addField("Server ID", "", true)
+                    .addField("Owner", "", true)
+                    .addField("Creation Date", "", true)
+                    .addField("Members", "", true)
+                    .addField("Other", "", true);
 
             event.replyEmbeds(serverEmbed.build()).queue();
-        }
-        else if (command.equals("support")) {
-            event.reply("Click the button for **Offical Kauwela Bot Support Server**").addActionRow(Button.link("https://discord.gg/jXpT9rtHMN","Invite")).queue();
-        }
-        else if (command.equals("invite")) {
-            event.reply("Click the button for Invite Kauwela Bot to your server").addActionRow(Button.link("https://ptb.discord.com/api/oauth2/authorize?client_id=984469828008026192&permissions=8&scope=bot%20applications.commands","Invite")).queue();
+        } else if (command.equals("support")) {
+            event.reply("Click the button for **Offical Kauwela Bot Support Server**").addActionRow(Button.link("https://discord.gg/jXpT9rtHMN", "Invite")).queue();
+        } else if (command.equals("invite")) {
+            event.reply("Click the button for Invite Kauwela Bot to your server").addActionRow(Button.link("https://ptb.discord.com/api/oauth2/authorize?client_id=984469828008026192&permissions=8&scope=bot%20applications.commands", "Invite")).queue();
 
-        }
-        else if (command.equals("help")) {
+        } else if (command.equals("help")) {
             EmbedBuilder embedHelp = new EmbedBuilder()
-                    .setAuthor("Kauwela Bot","https://ptb.discord.com/api/oauth2/authorize?client_id=984469828008026192&permissions=8&scope=bot%20applications.commands")
+                    .setAuthor("Kauwela Bot", "https://ptb.discord.com/api/oauth2/authorize?client_id=984469828008026192&permissions=8&scope=bot%20applications.commands")
                     .setColor(Color.YELLOW)
                     .setThumbnail("https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
-                    .setFooter("Kauwela Bot","https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
+                    .setFooter("Kauwela Bot", "https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
                     .setDescription("Kauwela Bot is a multipurpose disocrd managment and fun bot. It's writen in Java using JDA and  it's curently developing")
                     .addField(" \uD83D\uDCC1 Core Commands", """
                             `/help`  For command list\s
@@ -258,29 +277,28 @@ public class CommandManager extends ListenerAdapter{
                             `/support`  Bot's support server invite link
                             `/credits`  People behind the Bot
                             `/uptime`  How long the bot has been running
-                            `/status`  Stats of Bot""",false)
+                            `/status`  Stats of Bot""", false)
                     .addField("\uD83C\uDFB5 Music Commands", """
                             `/play`  Playing music
                             `/skip`  Skip the music
                             `/pause`  Pausing the music
-                            `/leave`  Bot leaves the channel""",true)
+                            `/leave`  Bot leaves the channel""", true)
                     .addField("ℹ️ Info Commands", """
                             `/userinfo`  User's info
                             `/serverinfo`  Server's info
                             `/clear`  Cleans the chat
-                            `/feedback`  Any feedback for Bot""",true)
+                            `/feedback`  Any feedback for Bot""", true)
                     .addField("\uD83C\uDF88 Fun Commands", """
                             `/8top` Ask Yes No questions
                             `/kedy`  Random cat photos and fun facts
                             `/soundboard`  Generates the soundboard
                             `/randomgpt`  Chat with GPT3 but random settings
-                            `/rimage`  Generates images with Dale2""",true)
-                    .addField("","Also When you right click a user from menu -> apps, you can get the users profile image`\n" +
-                            "\uD83E\uDD16 Ayrıca botu etiketleyip bot ile GPT3 kullanarak sohbet edebilirsin.",true);
+                            `/rimage`  Generates images with Dale2""", true)
+                    .addField("", "Also When you right click a user from menu -> apps, you can get the users profile image`\n" +
+                            "\uD83E\uDD16 Ayrıca botu etiketleyip bot ile GPT3 kullanarak sohbet edebilirsin.", true);
 
 
-
-            event.replyEmbeds(embedHelp.build()).addActionRow(Button.link("https://ptb.discord.com/api/oauth2/authorize?client_id=984469828008026192&permissions=8&scope=bot%20applications.commands","Invite"),
+            event.replyEmbeds(embedHelp.build()).addActionRow(Button.link("https://ptb.discord.com/api/oauth2/authorize?client_id=984469828008026192&permissions=8&scope=bot%20applications.commands", "Invite"),
                     Button.link("https://discord.gg/jXpT9rtHMN", "Support Server")).queue();
 
         } else if (command.equals("feedback")) {
@@ -304,34 +322,33 @@ public class CommandManager extends ListenerAdapter{
                 event.replyModal(modal).queue();
             }
 
-            }
-        else if (command.equals("soundboard")) {
+        } else if (command.equals("soundboard")) {
 
             EmbedBuilder soundEmbed = new EmbedBuilder()
                     .setAuthor("SoundBoard")
                     .setDescription("Emojilere tıkla bacım")
                     .setColor(Color.YELLOW)
                     .setThumbnail("https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
-                    .setFooter("Kauwela Bot","https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
-                    .addField("Sounds","`HihihiHa` \uD83E\uDD2A",true);
+                    .setFooter("Kauwela Bot", "https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
+                    .addField("Sounds", "`HihihiHa` \uD83E\uDD2A", true);
 
 
             event.reply("Soundboard Aktif").queue();
-           appCommands.TextChannel = event.getChannel().asTextChannel().getId();
+            appCommands.TextChannel = event.getChannel().asTextChannel().getId();
             event.getChannel().sendMessageEmbeds(soundEmbed.build()).queue(message -> {
                 message.addReaction(Emoji.fromUnicode("U+1F601")).queue();
                 message.addReaction(Emoji.fromUnicode("U+1F910")).queue();
                 message.addReaction(Emoji.fromUnicode("U+1F922")).queue();
             });
-        } else if(command.equals("randomgpt")) {
+        } else if (command.equals("randomgpt")) {
             System.out.println("Çalıştı");
             String prompt = event.getOptions().get(0).getAsString();
             event.deferReply().queue();
             try {
                 String response = ChatGPT.chatgptRandom(prompt);
 
-                event.getHook().sendMessage(response.substring(0,response.lastIndexOf("index")-3)) .queue();
-            }catch (Exception e){
+                event.getHook().sendMessage(response.substring(0, response.lastIndexOf("index") - 3)).queue();
+            } catch (Exception e) {
                 event.getHook().sendMessage("API de sıkıntı çıktı").queue();
             }
         } else if (command.equals("status")) {
@@ -342,15 +359,15 @@ public class CommandManager extends ListenerAdapter{
             eb.setThumbnail("https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png");
 
             eb.setDescription("");
-            eb.addField("Ping",""+event.getJDA().getGatewayPing()+"ms",true);
-            eb.addField("Kullanıcı Sayısı",""+MessageListener.totalMember(event),true);
-            eb.addField("Sunucu Sayısı",""+MessageListener.totalServer(event),true);
+            eb.addField("Ping", "" + event.getJDA().getGatewayPing() + "ms", true);
+            eb.addField("Kullanıcı Sayısı", "" + MessageListener.totalMember(event), true);
+            eb.addField("Sunucu Sayısı", "" + MessageListener.totalServer(event), true);
 
-            eb.addField("Bot Durumu","Aktif",true);
-            eb.addField("Sunucu Shard",""+event.getJDA().getShardInfo().getShardString(),true);
+            eb.addField("Bot Durumu", "Aktif", true);
+            eb.addField("Sunucu Shard", "" + event.getJDA().getShardInfo().getShardString(), true);
 
 
-            eb.setFooter("KauwelaBot",event.getJDA().getSelfUser().getAvatarUrl());
+            eb.setFooter("KauwelaBot", event.getJDA().getSelfUser().getAvatarUrl());
 
             //event.getChannel().sendMessageFormat(eb.build()).queue();
             event.replyEmbeds(eb.build()).queue();
@@ -360,31 +377,29 @@ public class CommandManager extends ListenerAdapter{
             event.deferReply().queue();
 
 
-              try {
-                  url = DallE.ImageCreaterRandomizer(prompt);
+            try {
+                url = DallE.ImageCreaterRandomizer(prompt);
 
-                  event.getHook().sendMessageEmbeds(new EmbedBuilder().setImage(url).setFooter(event.getUser().getName(),event.getUser().getAvatarUrl()).setAuthor(prompt).setColor(Color.magenta).build()).addActionRow(Button.primary("rimage_save","Save")).queue();
-              }catch (Exception e){
-                  event.getHook().sendMessage("API de sıkıntı çıktı").queue();
-              }
+                event.getHook().sendMessageEmbeds(new EmbedBuilder().setImage(url).setFooter(event.getUser().getName(), event.getUser().getAvatarUrl()).setAuthor(prompt).setColor(Color.magenta).build()).addActionRow(Button.primary("rimage_save", "Save")).queue();
+            } catch (Exception e) {
+                event.getHook().sendMessage("API de sıkıntı çıktı").queue();
+            }
 
-        }else if(command.equals("waifu")){
-            event.replyEmbeds(new EmbedBuilder().setImage(new RandomWaifu("sfw","waifu").getImageUrl()).build()).queue();
-        }
-        else if(command.equals("hug")){
-                if(event.getOptions().size() !=0){
-                    event.reply(event.getUser().getAsMention()+" "+event.getOptions().get(0).getAsUser().getAsMention()+" kişisine sarılıyor").queue();
-                    event.getChannel().sendMessageEmbeds(new EmbedBuilder()
-                            .setImage(new RandomWaifu("sfw","hug").getImageUrl())
-                            .build()).queue();
-                }
-                else {
-                    event.replyEmbeds(new EmbedBuilder().setImage(new RandomWaifu("sfw","hug").getImageUrl()).build()).queue();
-                }
-        }else if(command.equals("cutekedy")){
+        } else if (command.equals("waifu")) {
+            event.replyEmbeds(new EmbedBuilder().setImage(new RandomWaifu("sfw", "waifu").getImageUrl()).build()).queue();
+        } else if (command.equals("hug")) {
+            if (event.getOptions().size() != 0) {
+                event.reply(event.getUser().getAsMention() + " " + event.getOptions().get(0).getAsUser().getAsMention() + " kişisine sarılıyor").queue();
+                event.getChannel().sendMessageEmbeds(new EmbedBuilder()
+                        .setImage(new RandomWaifu("sfw", "hug").getImageUrl())
+                        .build()).queue();
+            } else {
+                event.replyEmbeds(new EmbedBuilder().setImage(new RandomWaifu("sfw", "hug").getImageUrl()).build()).queue();
+            }
+        } else if (command.equals("cutekedy")) {
             RandomCat kedy = new RandomCat();
             try {
-             RandomCuteKedy cat =   new RandomCuteKedy();
+                RandomCuteKedy cat = new RandomCuteKedy();
                 EmbedBuilder randomkedi = new EmbedBuilder()
                         .setDescription("**Fact: **" + kedy.getFact())
                         .setImage(cat.getImage("cute"));
@@ -397,13 +412,10 @@ public class CommandManager extends ListenerAdapter{
             }
 
 
-
-
-
-        }else if (command.equals("kedysearch")){
+        } else if (command.equals("kedysearch")) {
             try {
-                String prompt =event.getOptions().get(0).getAsString();
-                RandomCuteKedy cat =   new RandomCuteKedy();
+                String prompt = event.getOptions().get(0).getAsString();
+                RandomCuteKedy cat = new RandomCuteKedy();
                 EmbedBuilder randomkedi = new EmbedBuilder()
                         .setDescription(prompt)
                         .setImage(cat.getImage(prompt));
@@ -416,7 +428,7 @@ public class CommandManager extends ListenerAdapter{
 
             }
 
-        }else if (command.equals("animerush")){
+        } else if (command.equals("animerush")) {
             try {
                 RssReader reader = new RssReader("https://www.animerush.tv/rss.xml");
                /* EmbedBuilder anime = new EmbedBuilder()
@@ -432,6 +444,31 @@ public class CommandManager extends ListenerAdapter{
             }
 
 
+        }else if (command.equals("nowplaying")){
+            if (!event.getGuild().getMemberById(botID).getVoiceState().inAudioChannel()) {
+                event.reply("Ses kanalında değilim la").queue();
+
+            } else if (!event.getMember().getVoiceState().inAudioChannel()) {
+                event.reply("Kardeşşşş ses kanalında değilsin").queue();
+            }
+            GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(event.getGuild());
+            AudioManager audioManager = event.getGuild().getAudioManager();
+            AudioPlayer audioPlayer = musicManager.audioPlayer;
+            AudioTrack track = audioPlayer.getPlayingTrack();
+            if (track == null) {
+                event.reply("Herhangi müzik çalmıyor").queue();
+
+            }else {
+                AudioTrackInfo info = track.getInfo();
+                long[] times = calculateTime(info.length);
+                EmbedBuilder builder = new EmbedBuilder()
+                        .setAuthor(info.author)
+                        .setDescription(info.title)
+                        .addField("",times[0]+":"+times[1]+":"+times[2]+":"+times[3],false)
+                        .setThumbnail(thumbnail(info.uri));
+                event.replyEmbeds(builder.build()).queue();
+
+            }
 
         }
         /*else if(command.equals("ask")){
@@ -458,51 +495,51 @@ public class CommandManager extends ListenerAdapter{
     }*/
 
 
-        /*Test için ideal*/
-        @Override
-        public void onGuildReady (GuildReadyEvent event){
-            List<CommandData> commandData = new ArrayList<CommandData>();
+    /*Test için ideal*/
+    @Override
+    public void onGuildReady(GuildReadyEvent event) {
+        List<CommandData> commandData = new ArrayList<CommandData>();
 
-            commandData.add(Commands.slash("play", "Hardalı dinle çok iyi grup").addOption(OptionType.STRING, "music", "Gece Vakti'ini açmazsan darılırım", true));
-            try {
-                OptionData kedyOption = new OptionData(OptionType.STRING,"tag","kedyler çok sevimli",true)
+        commandData.add(Commands.slash("play", "Hardalı dinle çok iyi grup").addOption(OptionType.STRING, "music", "Gece Vakti'ini açmazsan darılırım", true));
+        try {
+            OptionData kedyOption = new OptionData(OptionType.STRING, "tag", "kedyler çok sevimli", true)
 
-                        .addChoices(randomCuteKedy.getChoices(10));
-                commandData.add(Commands.slash("kedysearch", "Kedy Arama Motoru").addOptions(kedyOption));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            commandData.add(Commands.slash("uptime", "Bakalım köle bot ne kadardır çalışıyor"));
-            commandData.add(Commands.slash("leave", "sg buradan bot"));
-            commandData.add(Commands.slash("resume", "Şarkıyı devam ettirir"));
-            commandData.add(Commands.slash("pause", "Şarkıyı durdurur."));
-            commandData.add(Commands.slash("credits", "Kredi skorunu gösterir"));
-            commandData.add(Commands.slash("8top", "Anneni sor").addOption(OptionType.STRING, "soru", "Sorunu sor bakem", true));
-            commandData.add(Commands.slash("randomgpt", "Anneni sor").addOption(OptionType.STRING, "soru", "Sorunu sor bakem", true));
-            commandData.add(Commands.slash("rimage", "Resim yap enayi").addOption(OptionType.STRING, "metin", "Nasıl bir şey olsun bacım", true));
-            commandData.add(Commands.slash("clear", "Sohbet kaydını temizler").addOption(OptionType.INTEGER, "mesajsayisi", "Temizleyeceğin mesaj sayisini gir", true));
-            commandData.add(Commands.slash("serverinfo", "Sunucunun bilgilerine bak"));
-            commandData.add(Commands.slash("invite", "İnviting for Kauwela Bot"));
-            commandData.add(Commands.slash("support", "Kauwela Bot support server"));
-            commandData.add(Commands.slash("soundboard", "SoundBoard"));
-            commandData.add(Commands.slash("help", "Command list"));
-            commandData.add(Commands.slash("feedback", "Feedback"));
-            commandData.add(Commands.slash("animerush", "Son çıkan animeyi gösterir"));
-            commandData.add(Commands.slash("skip", "Şarkıyı geçer"));
-            commandData.add(Commands.slash("cutekedy", "Tatliş kediler gönderir."));
-            commandData.add(Commands.slash("status", "Status of Bot"));
-            commandData.add(Commands.slash("hug", "Keşke bana da birileri sarılsa").addOption(OptionType.MENTIONABLE,"hedef","Ona sıkıca sarılın",false));
-            commandData.add(Commands.slash("waifu", "Keşke anime kızları gerçek olsa"));
-
-            commandData.add(Commands.context(Command.Type.USER, "Get user avatar"));
-            commandData.add(Commands.message("Count words"));
-           // commandData.add(Commands.slash("ask", "ChatGPT2  ile flörtme şansı").addOption(OptionType.STRING, "soru", "Anneni sor", true));
-            commandData.add(Commands.slash("kedy", "Günlük kedy dozunu karşılar"));
-            event.getGuild().updateCommands().addCommands(commandData).queue();
+                    .addChoices(randomCuteKedy.getChoices(10));
+            commandData.add(Commands.slash("kedysearch", "Kedy Arama Motoru").addOptions(kedyOption));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+        commandData.add(Commands.slash("uptime", "Bakalım köle bot ne kadardır çalışıyor"));
+        commandData.add(Commands.slash("leave", "sg buradan bot"));
+        commandData.add(Commands.slash("resume", "Şarkıyı devam ettirir"));
+        commandData.add(Commands.slash("pause", "Şarkıyı durdurur."));
+        commandData.add(Commands.slash("credits", "Kredi skorunu gösterir"));
+        commandData.add(Commands.slash("8top", "Anneni sor").addOption(OptionType.STRING, "soru", "Sorunu sor bakem", true));
+        commandData.add(Commands.slash("randomgpt", "Anneni sor").addOption(OptionType.STRING, "soru", "Sorunu sor bakem", true));
+        commandData.add(Commands.slash("rimage", "Resim yap enayi").addOption(OptionType.STRING, "metin", "Nasıl bir şey olsun bacım", true));
+        commandData.add(Commands.slash("clear", "Sohbet kaydını temizler").addOption(OptionType.INTEGER, "mesajsayisi", "Temizleyeceğin mesaj sayisini gir", true));
+        commandData.add(Commands.slash("serverinfo", "Sunucunun bilgilerine bak"));
+        commandData.add(Commands.slash("invite", "İnviting for Kauwela Bot"));
+        commandData.add(Commands.slash("support", "Kauwela Bot support server"));
+        commandData.add(Commands.slash("soundboard", "SoundBoard"));
+        commandData.add(Commands.slash("help", "Command list"));
+        commandData.add(Commands.slash("feedback", "Feedback"));
+        commandData.add(Commands.slash("animerush", "Son çıkan animeyi gösterir"));
+        commandData.add(Commands.slash("skip", "Şarkıyı geçer"));
+        commandData.add(Commands.slash("cutekedy", "Tatliş kediler gönderir."));
+        commandData.add(Commands.slash("status", "Status of Bot"));
+        commandData.add(Commands.slash("hug", "Keşke bana da birileri sarılsa").addOption(OptionType.MENTIONABLE, "hedef", "Ona sıkıca sarılın", false));
+        commandData.add(Commands.slash("waifu", "Keşke anime kızları gerçek olsa"));
 
-
-
+        commandData.add(Commands.context(Command.Type.USER, "Get user avatar"));
+        commandData.add(Commands.message("Count words"));
+        // commandData.add(Commands.slash("ask", "ChatGPT2  ile flörtme şansı").addOption(OptionType.STRING, "soru", "Anneni sor", true));
+        commandData.add(Commands.slash("kedy", "Günlük kedy dozunu karşılar"));
+        commandData.add(Commands.slash("nowplaying", "Çalan şarkıyı gösterir."));
+        event.getGuild().updateCommands().addCommands(commandData).queue();
     }
+
+
+}
 
 
