@@ -210,8 +210,17 @@ public class CommandManager extends ListenerAdapter {
 
         } else if (command.equals("resume")) {
             GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(event.getGuild());
-            musicManager.scheduler.player.setPaused(false);
-            event.reply("Müzik başlatıldı.").queue();
+            if (!event.getGuild().getMemberById(botID).getVoiceState().inAudioChannel()) {
+                event.reply("Ses kanalında değilim la").queue();
+
+            }
+            else if (!event.getMember().getVoiceState().inAudioChannel()) {
+                event.reply("Kardeşşşş ses kanalında değilsin").queue();
+            }else {
+                musicManager.scheduler.player.setPaused(false);
+                event.reply("Müzik başlatıldı.").queue();
+            }
+
 
         } else if (command.equals("skip")) {
             GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(event.getGuild());
@@ -551,6 +560,26 @@ public class CommandManager extends ListenerAdapter {
         }
         else if(command.equals("activity")){
             event.replyEmbeds(RandomActivity.randomActivityGenerator().build()).queue();
+        } else if (command.equals("volume")) {
+            GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(event.getGuild());
+            AudioManager audioManager = event.getGuild().getAudioManager();
+            AudioPlayer audioPlayer = musicManager.audioPlayer;
+            int volume = event.getOptions().get(0).getAsInt();
+            if (!event.getGuild().getMemberById(botID).getVoiceState().inAudioChannel()) {
+                event.reply("Ses kanalında değilim la").queue();
+
+            }
+            else if (!event.getMember().getVoiceState().inAudioChannel()) {
+                event.reply("Kardeşşşş ses kanalında değilsin").queue();
+            }else {
+                audioPlayer.setVolume(volume);
+                event.replyEmbeds(new EmbedBuilder()
+                                .setThumbnail(event.getUser().getAvatarUrl())
+                        .setDescription( event.getUser().getAsMention()+ "kişisi şarkı seviyesini "+ volume+"% ayarlardı").build()).queue();
+            }
+
+
+
         }
         else if(command.equals("randomdog")){
             String url = RandomDog.randomDogGeneator();
@@ -633,6 +662,7 @@ public class CommandManager extends ListenerAdapter {
         commandData.add(Commands.slash("queue", "Çalma listesini gösterir."));
         commandData.add(Commands.slash("randommeme", "MEME"));
         commandData.add(Commands.slash("trmeme", "MEME BUT TR"));
+        commandData.add(Commands.slash("volume", "Ses seviyesini ayarlar").addOption(OptionType.INTEGER,"volume","Kardeşşş çok açma",true));
         event.getGuild().updateCommands().addCommands(commandData).queue();
     }
 
