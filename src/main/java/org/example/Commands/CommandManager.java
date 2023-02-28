@@ -494,6 +494,9 @@ public class CommandManager extends ListenerAdapter {
                 throw new RuntimeException(e);
             }
         }
+
+
+
         /*else if(command.equals("ask")){
             String question = (ChatGPT.chatgpt(event.getOptions().get(0).getAsString()));
             System.out.println(question);
