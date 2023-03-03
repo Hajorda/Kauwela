@@ -13,10 +13,12 @@ import net.dv8tion.jda.api.entities.Guild;
 
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 
+import java.awt.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
+import java.util.List;
 
 public class PlayerManager {
     private static PlayerManager INSTANCE;
@@ -80,18 +82,21 @@ public class PlayerManager {
             @Override
             public void trackLoaded(AudioTrack track) {
                 musicManager.scheduler.queue(track);
-                AudioTrackInfo  audioTrackInfo = track.getInfo();
+                AudioTrackInfo audioTrackInfo = track.getInfo();
                 long[] times = calculateTime(audioTrackInfo.length);
-                EmbedBuilder embedBuilder = new EmbedBuilder();
-                System.out.println("çalıştı");
-                embedBuilder.setTitle(audioTrackInfo.author)
+                System.out.println("Yeni Müzik Eklendi za1");
+                EmbedBuilder embedplay = new EmbedBuilder()
+                        .setAuthor(audioTrackInfo.author,"https://www.youtube.com/watch?v=unPQQQ8RDKw","https://images-ext-2.discordapp.net/external/4m5O3ILn9TnwpE6n3Hto--CWAzlRZOqixQAu-pwo-hk/https/eartensifier.net/images/cd.gif")
                         .addField("",audioTrackInfo.title,false)
-                        .addField("",times[0]+":"+times[1]+":"+times[2]+":"+times[3],false)
+                        .addField("",""+"Duration: "+times[1]+":"+times[2],false)
+                        .setColor(Color.yellow)
+                        .setFooter("KauwelaBot","https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
                         .setThumbnail(thumbnail(audioTrackInfo.uri));
+
 
                 System.out.println(audioTrackInfo.title);
 
-                channel.sendMessageEmbeds(embedBuilder.build()).queue();
+                channel.sendMessageEmbeds(embedplay.build()).queue();
 
 
             }
@@ -108,11 +113,13 @@ public class PlayerManager {
                 }
                 AudioTrackInfo  audioTrackInfo = tracks.get(0).getInfo();
                 long[] times = calculateTime(audioTrackInfo.length);
-                EmbedBuilder embedBuilder = new EmbedBuilder();
-                System.out.println("çalıştı");
-                embedBuilder.setTitle(audioTrackInfo.author)
+                EmbedBuilder embedBuilder = new EmbedBuilder()
+
+               .setAuthor(audioTrackInfo.author,"https://www.youtube.com/watch?v=unPQQQ8RDKw","https://images-ext-2.discordapp.net/external/4m5O3ILn9TnwpE6n3Hto--CWAzlRZOqixQAu-pwo-hk/https/eartensifier.net/images/cd.gif")
                         .addField("",audioTrackInfo.title,false)
-                        .addField("",times[0]+":"+times[1]+":"+times[2]+":"+times[3],false)
+                        .addField("",""+"Duration: "+times[1]+":"+times[2],false)
+                        .setColor(Color.yellow)
+                        .setFooter("KauwelaBot","https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
                         .setThumbnail(thumbnail(audioTrackInfo.uri));
 
                 System.out.println(audioTrackInfo.title);
@@ -156,11 +163,13 @@ public class PlayerManager {
                 musicManager.scheduler.queue(track);
                 AudioTrackInfo  audioTrackInfo = track.getInfo();
                 long[] times = calculateTime(audioTrackInfo.length);
-                EmbedBuilder embedBuilder = new EmbedBuilder();
-                System.out.println("çalıştı");
-                embedBuilder.setTitle(audioTrackInfo.author)
+                EmbedBuilder embedBuilder = new EmbedBuilder()
+
+                .setAuthor(audioTrackInfo.author,"https://www.youtube.com/watch?v=unPQQQ8RDKw","https://images-ext-2.discordapp.net/external/4m5O3ILn9TnwpE6n3Hto--CWAzlRZOqixQAu-pwo-hk/https/eartensifier.net/images/cd.gif")
                         .addField("",audioTrackInfo.title,false)
-                        .addField("",times[0]+":"+times[1]+":"+times[2]+":"+times[3],false)
+                        .addField("",""+"Duration: "+times[1]+":"+times[2],false)
+                        .setColor(Color.yellow)
+                        .setFooter("KauwelaBot","https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
                         .setThumbnail(thumbnail(audioTrackInfo.uri));
 
                 System.out.println(audioTrackInfo.title);

@@ -214,7 +214,7 @@ public class MessageListener extends ListenerAdapter {
 
         } if (message.toLowerCase().contains("nerde")||message.toLowerCase().contains("nerede")){
            if (!event.getMember().getUser().getId().equals("984469828008026192")){
-               event.getChannel().sendMessage("Ananın amında \n"+"*Ben bir botum, 'nerede' ile biten yorumlara otomatik olarak ananın amında yazıyorum. Kalbini kırdıysam özür dilerim*").queue();
+               event.getChannel().sendMessage("Ananın amında \n"+"`Ben bir botum, 'nerede' ile biten yorumlara otomatik olarak ananın amında yazıyorum. Kalbini kırdıysam özür dilerim`").queue();
            }
         }
 

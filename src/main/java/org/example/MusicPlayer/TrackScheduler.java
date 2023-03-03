@@ -8,6 +8,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import net.dv8tion.jda.api.EmbedBuilder;
 import org.example.Commands.CommandManager;
 
+import java.awt.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -55,10 +56,12 @@ public class TrackScheduler extends AudioEventAdapter {
     public void nextTrack() {
         AudioTrackInfo audioTrackInfo = queue.element().getInfo();
         long[] times = calculateTime(audioTrackInfo.length);
-        EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setTitle(audioTrackInfo.author)
+        EmbedBuilder embedBuilder = new EmbedBuilder()
+         .setAuthor(audioTrackInfo.author,"https://www.youtube.com/watch?v=unPQQQ8RDKw","https://images-ext-2.discordapp.net/external/4m5O3ILn9TnwpE6n3Hto--CWAzlRZOqixQAu-pwo-hk/https/eartensifier.net/images/cd.gif")
                 .addField("",audioTrackInfo.title,false)
-                .addField("",times[0]+":"+times[1]+":"+times[2]+":"+times[3],false)
+                .addField("",""+"Duration: "+times[1]+":"+times[2],false)
+                .setColor(Color.yellow)
+                .setFooter("KauwelaBot","https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
                 .setThumbnail(thumbnail(audioTrackInfo.uri));
 
         System.out.println(audioTrackInfo.title);

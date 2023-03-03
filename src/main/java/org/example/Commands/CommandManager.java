@@ -28,6 +28,7 @@ import net.dv8tion.jda.api.interactions.components.text.TextInput;
 import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
 import net.dv8tion.jda.api.interactions.modals.Modal;
 import net.dv8tion.jda.api.managers.AudioManager;
+import net.dv8tion.jda.api.utils.FileUpload;
 import org.example.ChatGPT.ChatGPT;
 import org.example.ChatGPT.DallE;
 import org.example.Listeners.MessageListener;
@@ -46,6 +47,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
@@ -243,7 +245,8 @@ public class CommandManager extends ListenerAdapter {
             }
 
         } else if (command.equals(("credits"))) {
-
+            EmbedBuilder asda = new EmbedBuilder();
+            asda.setTitle("asdadada");
             EmbedBuilder creditEmbed = new EmbedBuilder()
                     .setAuthor("Credits")
                     .setColor(Color.YELLOW)
@@ -398,7 +401,6 @@ public class CommandManager extends ListenerAdapter {
             eb.addField("Bot Durumu", "Aktif", true);
             eb.addField("Sunucu Shard", "" + event.getJDA().getShardInfo().getShardString(), true);
 
-
             eb.setFooter("KauwelaBot", event.getJDA().getSelfUser().getAvatarUrl());
 
             //event.getChannel().sendMessageFormat(eb.build()).queue();
@@ -545,11 +547,13 @@ public class CommandManager extends ListenerAdapter {
 
         }
         else if(command.equals("randommeme")){
+
             try {
                 event.replyEmbeds(RandomMeme.randomMemeGenerate().build()).queue();
             } catch (URISyntaxException e) {
                 throw new RuntimeException(e);
             }
+
         }
         else if(command.equals("trmeme")){
             try {
@@ -574,8 +578,9 @@ public class CommandManager extends ListenerAdapter {
             }else {
                 audioPlayer.setVolume(volume);
                 event.replyEmbeds(new EmbedBuilder()
-                                .setThumbnail(event.getUser().getAvatarUrl())
-                        .setDescription( event.getUser().getAsMention()+ "kişisi şarkı seviyesini "+ volume+"% ayarlardı").build()).queue();
+                                .setThumbnail("https://media.discordapp.net/attachments/984469722500329474/1076536703365435522/image.png")
+                                .setFooter(event.getUser().getName(),event.getUser().getAvatarUrl())
+                        .setTitle( event.getUser().getName()+ " şarkı seviyesini "+ volume+"% e ayarlardı").build()).queue();
             }
 
 
@@ -590,6 +595,17 @@ public class CommandManager extends ListenerAdapter {
                     else
                     event.replyEmbeds(new EmbedBuilder().setImage(url).setColor(Color.YELLOW).setAuthor("A random dog picture").setFooter("KauwelaBot","https://cdn.discordapp.com/attachments/984469722500329474/1076536703365435522/image.png").build()).queue();
         }
+        else if(command.equals("ozgur")){
+            EmbedBuilder ozgurEmbed = new EmbedBuilder()
+            .setTitle("Mesaj Info")
+            .addField("Sunucu:",event.getGuild().getName(),false)
+            .addField("Yazan Kişi:",event.getUser().getName(),false)
+                    .addField("Yazan kişi fotografı","",false)
+                    .setImage(event.getUser().getAvatarUrl())
+            .setThumbnail(event.getGuild().getIconUrl());
+            event.replyEmbeds(ozgurEmbed.build()).queue();
+        }
+
 
 
 
@@ -646,6 +662,7 @@ public class CommandManager extends ListenerAdapter {
         commandData.add(Commands.slash("soundboard", "SoundBoard"));
         commandData.add(Commands.slash("help", "Command list"));
         commandData.add(Commands.slash("feedback", "Feedback"));
+        commandData.add(Commands.slash("ozgur", "gets user writer info very important !!!!"));
         commandData.add(Commands.slash("animerush", "Son çıkan animeyi gösterir"));
         commandData.add(Commands.slash("skip", "Şarkıyı geçer"));
         commandData.add(Commands.slash("cutekedy", "Tatliş kediler gönderir."));
