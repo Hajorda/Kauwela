@@ -3,7 +3,7 @@ package org.example.Listeners;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.example.Commands.CommandManager;
+import org.example.Commando.CommandManager;
 
 import java.awt.*;
 

@@ -1,5 +1,9 @@
 package org.example.Listeners;
 
+import com.sedmelluq.discord.lavaplayer.filter.equalizer.Equalizer;
+import com.sedmelluq.discord.lavaplayer.filter.equalizer.EqualizerConfiguration;
+import com.sedmelluq.discord.lavaplayer.filter.equalizer.EqualizerFactory;
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.EmbedBuilder;
 
@@ -12,8 +16,11 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
+import net.dv8tion.jda.api.managers.AudioManager;
 import org.example.ChatGPT.ChatGPT;
 import org.example.ChatGPT.DallE;
+import org.example.MusicPlayer.GuildMusicManager;
+import org.example.MusicPlayer.PlayerManager;
 
 import java.awt.*;
 

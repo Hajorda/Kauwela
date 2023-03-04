@@ -6,7 +6,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import net.dv8tion.jda.api.EmbedBuilder;
-import org.example.Commands.CommandManager;
+import org.example.Commando.CommandManager;
 
 import java.awt.*;
 import java.util.concurrent.BlockingQueue;

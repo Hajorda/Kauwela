@@ -4,11 +4,50 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ee6ee57-111b-4285-a23e-f17abe0fb43a" name="Changes" comment="Random Dog">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_02_2023_21_18__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_02_2023_21_18__Changes_.xml" afterDir="false" />
+    <list default="true" id="5ee6ee57-111b-4285-a23e-f17abe0fb43a" name="Changes" comment="volume">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commando/CommandManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/ACommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Core/credits.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Core/help.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Core/invite.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Core/status.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Core/support.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Core/uptime.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Fun/activity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Fun/animerush.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Fun/cutekedy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Fun/gulle8.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Fun/hug.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Fun/kedy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Fun/kedysearch.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Fun/randomdog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Fun/randomgpt.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Fun/randommeme.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Fun/rimage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Fun/soundboard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Fun/trmeme.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Fun/waifu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Music/Music.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Music/leave.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Music/nowplaying.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Music/pause.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Music/play.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Music/queue.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Music/resume.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Music/skip.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Music/volume.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Utilites/clear.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Utilites/feedback.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Utilites/serverinfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/Utilites/userinfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Commands/CommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Commands/CommandManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Commands/CommandManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Commands/appCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Commando/appCommands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Listeners/ButtonListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Listeners/ButtonListeners.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Listeners/MessageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Listeners/MessageListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MusicPlayer/PlayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MusicPlayer/PlayerManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MusicPlayer/TrackScheduler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MusicPlayer/TrackScheduler.java" afterDir="false" />
     </list>
@@ -20,13 +59,13 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/src/main/java/org/example/Listeners/GuildListener.java" root0="SKIP_HIGHLIGHTING" />
@@ -308,7 +347,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/Hardal" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>

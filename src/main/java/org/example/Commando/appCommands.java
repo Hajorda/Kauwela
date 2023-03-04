@@ -1,4 +1,4 @@
-package org.example.Commands;
+package org.example.Commando;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;

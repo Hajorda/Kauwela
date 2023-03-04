@@ -1,7 +1,6 @@
 package org.example;
 
 import io.github.cdimascio.dotenv.Dotenv;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -10,8 +9,8 @@ import net.dv8tion.jda.api.sharding.ShardManager;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
-import org.example.Commands.CommandManager;
-import org.example.Commands.appCommands;
+import org.example.Commando.CommandManager;
+import org.example.Commando.appCommands;
 import org.example.Listeners.ButtonListeners;
 import org.example.Listeners.GuildListener;
 import org.example.Listeners.GuildMemberListener;
@@ -35,7 +34,7 @@ public class Main {
 
     public Main() throws LoginException {
         config = Dotenv.configure().load();
-        String token = config.get("TOKEN");
+        String token = config.get("TOKEN2");
 
 
 
