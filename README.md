@@ -1,6 +1,6 @@
 KauwelaBot is a Discord built by JDA framework
 Kauwela Bot is a multipurpose disocrd managment and fun bot. It's writen in Java using JDA and it's curently developing
-📁 Core Commands
+📁 Core Commands 
 /help For command list
 /invite Bot's imvite link
 /support Bot's support server invite link
